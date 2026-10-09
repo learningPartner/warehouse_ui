@@ -1,1 +1,157 @@
-<p>client-list works!</p>
+<section class="clients-page">
+    <div class="page-heading">
+        <div>
+            <div class="page-eyebrow"><i class="fa fa-users" aria-hidden="true"></i> RELATIONSHIPS</div>
+            <h1>Clients</h1>
+            <p class="page-description">Keep track of the people who trust you with their space.</p>
+        </div>
+        <button class="btn btn-primary add-client-button" type="button" routerLink="/admin/clinet-form/0"> 
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Add client
+        </button>
+    </div>
+
+    <div class="client-toolbar">
+        <label class="search-field">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <input type="search" placeholder="Search clients..." aria-label="Search clients" />
+        </label>
+
+        <div class="toolbar-actions">
+            <button class="filter-button" type="button">
+                <i class="fa fa-filter" aria-hidden="true"></i>
+                <span>All clients</span>
+                <i class="fa fa-angle-down filter-chevron" aria-hidden="true"></i>
+            </button>
+            <div class="view-toggle" role="group" aria-label="Client view">
+                <button class="view-option" (click)="isCardView = !isCardView" [ngClass]="isCardView ?'selected':''"
+                    type="button" aria-pressed="true">
+                    <i class="fa fa-th-large" aria-hidden="true"></i>
+                    <span>Cards</span>
+                </button>
+                <button class="view-option" (click)="isCardView = !isCardView" [ngClass]="!isCardView ?'selected':''"
+                    type="button" aria-pressed="false">
+                    <i class="fa fa-list" aria-hidden="true"></i>
+                    <span>Table</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="results-heading">
+        <div>
+            <h2>Client directory</h2>
+            <p>Client details and account status</p>
+        </div>
+        <span class="result-count">1 client</span>
+    </div>
+
+    @if (isCardView) {
+    <section class="client-cards" aria-label="Clients in card view">
+         @for (item of clientList(); track $index) { 
+
+             <article class="client-card">
+            <div class="client-card-top">
+                <div class="client-identity">
+                    <span class="client-avatar" aria-hidden="true">T</span>
+                    <div>
+                        <h3>test</h3>
+                        <span class="client-id">Client #2</span>
+                    </div>
+                </div>
+                <span class="status-badge">
+                    <span class="status-dot"></span>
+                    Active
+                </span>
+            </div>
+
+            <div class="client-contact-list">
+                <a class="client-contact" href="tel:1122334455">
+                    <span class="contact-icon"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                    <span>1122334455</span>
+                </a>
+                <a class="client-contact" href="mailto:test111@example.com">
+                    <span class="contact-icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                    <span>test111@example.com</span>
+                </a>
+                <div class="client-contact">
+                    <span class="contact-icon"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                    <span>string</span>
+                </div>
+            </div>
+
+            <div class="client-card-footer">
+                <span><i class="fa fa-calendar-o" aria-hidden="true"></i> Added Sep 12, 2026</span>
+                <div class="client-actions">
+                    <button class="icon-action" type="button" aria-label="View test">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </button>
+                    <button class="icon-action" routerLink="/admin/clinet-form/{{item.clientId}}" type="button" aria-label="Edit test">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </button>
+                    <button class="icon-action more-action" (click)="onDeleteClient(item.clientId)" type="button" aria-label="More actions for test">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </article>
+         }
+       
+    </section>
+    } @else {
+    <section class="client-table-section" aria-label="Clients in table view">
+        <div class="table-section-heading">
+            <div>
+                <h2>Table view</h2>
+                <p>The same client details in a compact list.</p>
+            </div>
+        </div>
+        <div class="table-scroll">
+            <table class="client-table">
+                <thead>
+                    <tr>
+                        <th scope="col">CLIENT</th>
+                        <th scope="col">PHONE</th>
+                        <th scope="col">EMAIL ADDRESS</th>
+                        <th scope="col">ADDRESS</th>
+                        <th scope="col">STATUS</th>
+                        <th scope="col">ADDED</th>
+                        <th scope="col"><span class="visually-hidden">Actions</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (item of clientList(); track $index) {
+                    <tr>
+                        <td>
+                            <div class="table-client">
+                                <span class="table-avatar" aria-hidden="true">T</span>
+                                <span><strong>{{item.clientName}}</strong><small>ID #2</small></span>
+                            </div>
+                        </td>
+                        <td><a href="tel:1122334455">{{item.phoneNumber}}</a></td>
+                        <td><a href="mailto:test111@example.com">{{item.emailAddress}}</a></td>
+                        <td>string</td>
+                        <td><span class="status-badge"><span class="status-dot"></span>{{item.isActive ? "Active":'De-Active'}}</span></td>
+                        <td>{{item.createdAt|date:'dd-MM-yyyy'}}</td>
+                        <td>
+                            <button class="icon-action table-more-action" routerLink="/admin/clinet-form/{{item.clientId}}" type="button"
+                                aria-label="More actions for test">
+                              <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </button>
+                            <button class="icon-action table-more-action" (click)="onDeleteClient(item.clientId)"  type="button"
+                                aria-label="More actions for test">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+    }
+
+
+
+</section>

@@ -1,0 +1,74 @@
+.client-form-page {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.form-page-heading {
+  margin-bottom: 14px;
+}
+
+.form-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 7px;
+  color: var(--color-primary);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 1.35px;
+}
+
+.form-eyebrow .fa {
+  font-size: 12px;
+}
+
+.heading-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.back-link {
+  display: grid;
+  width: 35px;
+  height: 35px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: #536258;
+  background: #fff;
+  font-size: 13px;
+  text-decoration: none;
+  transition:
+    color 140ms ease,
+    border-color 140ms ease,
+    background-color 140ms ease;
+}
+
+.back-link:hover {
+  border-color: #c9d8cd;
+  color: var(--color-primary);
+  background: #f5faf6;
+}
+
+.heading-title-row h1 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: -0.7px;
+}
+
+.heading-description {
+  margin: 3px 0 0;
+  color: var(--color-muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.back-link:focus-visible {
+  outline: 3px solid rgba(21, 128, 61, 0.3);
+  outline-offset: 2px;
+}

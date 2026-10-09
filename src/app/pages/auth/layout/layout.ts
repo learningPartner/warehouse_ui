@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { IUser } from '../../../core/models/interfaces/common.model';
 import { GLOBAL_CONSTANT } from '../../../core/constant/global.contant';
 
 @Component({
   selector: 'app-layout',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLink],
   templateUrl: './layout.html',
   styleUrl: './layout.css',
 })

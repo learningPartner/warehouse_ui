@@ -2,6 +2,9 @@ export const GLOBAL_CONSTANT = {
     API_METHODS:{
         GET_ALL_CLIENT: 'GetAllClients',
         SAVE_CLIENT: 'addclient',
+        UPDATE_CLIENT:'UpdateClient',
+        GET_CLIENT_BY_ID:'GetClientById?clientId=',
+        DELETE_CLEINT:'DeleteClient?clientId=',
         LOGIN: 'login'
     },
     LOCAL_LOGIN_KEY:'warehouseUser',

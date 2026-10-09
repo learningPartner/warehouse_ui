@@ -20,7 +20,21 @@ export class ClientService {
     return this.http.get<API_Response>(this.api_url + GLOBAL_CONSTANT.API_METHODS.GET_ALL_CLIENT)
   }
 
+  getClientById(id: number): Observable<API_Response> {
+    return this.http.get<API_Response>(this.api_url + GLOBAL_CONSTANT.API_METHODS.GET_CLIENT_BY_ID + id)
+  }
+
   saveClient(obj: ClientModel) :  Observable<API_Response>{
     return this.http.post<API_Response>(this.api_url + GLOBAL_CONSTANT.API_METHODS.SAVE_CLIENT,obj)
   }
+
+  updateClient(obj: ClientModel) :  Observable<API_Response>{
+    return this.http.put<API_Response>(this.api_url + GLOBAL_CONSTANT.API_METHODS.UPDATE_CLIENT,obj)
+  }
+
+  deleteClient(id: number) :  Observable<API_Response>{
+    return this.http.delete<API_Response>(this.api_url + GLOBAL_CONSTANT.API_METHODS.DELETE_CLEINT + id)
+  }
+
+   
 }

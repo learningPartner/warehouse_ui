@@ -22,11 +22,10 @@ export const routes: Routes = [
     children: [
       {
         path: 'clinet-list',
-        component: ClientList,
-      
+        component: ClientList, 
       },
       {
-        path: 'clinet-form',
+        path: 'clinet-form/:id',
         component: ClientForm,
       },
     ],
