@@ -1,0 +1,168 @@
+<section class="warehouse-page" aria-labelledby="warehouse-heading">
+    <header class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+        <div>
+            <div class="warehouse-eyebrow mb-2">SPACE MANAGEMENT</div>
+            <h1 id="warehouse-heading">Warehouses</h1>
+            <p class="warehouse-muted mb-0">Manage the spaces your clients call their storage home.</p>
+        </div>
+        <a href="#warehouse-create" class="form-button form-button--primary"><i class="fa fa-plus"
+                aria-hidden="true"></i> Add warehouse</a>
+    </header>
+    <div class="row g-3 mb-4">
+        <div class="col-sm-4">
+            <div class="form-card warehouse-stat"><span class="form-section-icon"><i class="fa fa-building-o"
+                        aria-hidden="true"></i></span>
+                <div><small>Total warehouses</small><strong>3</strong></div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-card warehouse-stat"><span class="form-section-icon"><i class="fa fa-arrows-alt"
+                        aria-hidden="true"></i></span>
+                <div><small>Total storage area</small><strong>36,500 <span>sq ft</span></strong></div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-card warehouse-stat"><span class="form-section-icon warehouse-accent"><i
+                        class="fa fa-snowflake-o" aria-hidden="true"></i></span>
+                <div><small>Cold storage available</small><strong>2 <span>warehouses</span></strong></div>
+            </div>
+        </div>
+    </div>
+    <div class="row g-4 align-items-start">
+        <div class="col-xl-8">
+            <section class="form-card" aria-labelledby="directory-heading">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                    <div>
+                        <h2 id="directory-heading" class="warehouse-section-title">Warehouse directory</h2>
+                        <p class="warehouse-muted mb-0">Location, capacity and storage facilities</p>
+                    </div><span class="warehouse-badge">3 warehouses</span>
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col-md-8">
+                        <div class="field-control"><i class="fa fa-search" aria-hidden="true"></i><input type="search"
+                                placeholder="Search warehouse or city..."
+                                aria-label="Search warehouses (design preview)" /></div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="field-control field-select-control"><i class="fa fa-filter"
+                                aria-hidden="true"></i><select aria-label="Storage filter (design preview)">
+                                <option>All storage types</option>
+                                <option>Cold storage</option>
+                                <option>Standard storage</option>
+                            </select><i class="fa fa-angle-down select-chevron" aria-hidden="true"></i></div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-middle warehouse-table mb-0">
+                        <caption class="visually-hidden">Sample warehouse records and actions</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">WAREHOUSE / LOCATION</th>
+                                <th scope="col">TOTAL AREA</th>
+                                <th scope="col">FACILITY</th>
+                                <th scope="col">ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (item of gridList(); track $index) {
+                            <tr>
+                                <td><strong>{{item.title}}</strong><small>{{item.address1}} </small></td>
+                                <td>{{totalArea}} sq ft</td>
+                                <td><span class="warehouse-badge warehouse-neutral">{{item.isColdStorageAvailable ?
+                                        'Cold Storage Available':'No Cold Storage'}}</span></td>
+                                <td>
+
+
+
+                                    <a (click)="onEdit(item)" aria-label="Edit Greenfield Central"><i
+                                            class="fa fa-pencil" aria-hidden="true"></i></a> <a href="#warehouse-delete"
+                                        class="warehouse-danger" aria-label="Delete Greenfield Central"><i
+                                            class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+                <p class="warehouse-muted mt-3 mb-0">Showing 3 of 3 warehouses � Sample records</p>
+            </section>
+        </div>
+        <div class="col-xl-4">
+            <form id="warehouse-create" [formGroup]="warehousForm" (ngSubmit)="onSave()" class="form-layout"
+                aria-labelledby="create-heading">
+                <section class="form-card">
+                    <div class="form-card-heading"><span class="form-section-icon"><i class="fa fa-plus"
+                                aria-hidden="true"></i></span>
+                        <div>
+                            <h2 id="create-heading">Add warehouse</h2>
+                            <p>Set up a new space for your clients.</p>
+                        </div>
+                    </div>
+                    <div class="form-fields">
+                        <div class="field-group field-full">
+                            <label for="new-title">Warehouse title <span class="required-mark">*</span></label>
+                            <div class="field-control"><i class="fa fa-building-o" aria-hidden="true"></i>
+                                <input id="new-title" formControlName="title" name="title"
+                                    placeholder="e.g. Greenfield Central" required />
+                            </div>
+                        </div>
+                        <div class="field-group field-full">
+                            <label for="new-address1">Address line 1 <span class="required-mark">*</span></label>
+                            <div class="field-control"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                <input id="new-address1" formControlName="address1" name="address1"
+                                    placeholder="Plot number, street or industrial park" required />
+                            </div>
+                        </div>
+                        <div class="field-group field-full">
+                            <label for="new-address2">Address line 2 (optional)</label>
+                            <div class="field-control"><i class="fa fa-map-marker" aria-hidden="true">
+
+                                </i><input id="new-address2" formControlName="address2" name="address2"
+                                    placeholder="Landmark, building or floor" /></div>
+                        </div>
+                        <div class="field-group field-full">
+                            <label for="new-city">City <span class="required-mark">*</span></label>
+                            <div class="field-control"><i class="fa fa-map-o" aria-hidden="true"></i>
+                                <input id="new-city" formControlName="city" name="city" placeholder="Enter city"
+                                    required />
+                            </div>
+                        </div>
+                        <div class="field-group field-full">
+                            <label for="new-area">Total area (sq ft) <span class="required-mark">*</span></label>
+                            <div class="field-control"><i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                <input id="new-area" formControlName="totalArea" name="totalArea" type="number" min="1"
+                                    placeholder="e.g. 18000" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="warehouse-facility mt-3">
+                        <div class="form-check form-switch warehouse-switch"><input id="new-cold"
+                                name="isColdStorageAvailable" class="form-check-input"
+                                formControlName="isColdStorageAvailable" type="checkbox" role="switch" /><label
+                                for="new-cold" class="form-check-label">Cold storage
+                                available</label></div>
+                        <p class="warehouse-muted mt-1 mb-0">Enable for temperature-controlled storage.</p>
+                    </div>
+                    <div class="form-actions mt-3">
+                        <button type="reset" class="form-button form-button--secondary">Clear</button>
+                        @if(editId ==0) {
+                             <button type="submit" class="form-button form-button--primary"><i class="fa fa-plus"
+                                aria-hidden="true"></i> Save
+                            warehouse</button>
+                        } @else {
+                             <button type="submit" class="form-button form-button--update"><i class="fa fa-plus"
+                                aria-hidden="true"></i> Update
+                            warehouse</button>
+                        }
+                       
+
+                            
+                    </div>
+                </section>
+                <p class="warehouse-muted px-1">Fields marked <span class="required-mark">*</span> are required. Area is
+                    shown in square feet.</p>
+            </form>
+        </div>
+    </div>
+</section>

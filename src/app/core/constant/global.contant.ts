@@ -1,11 +1,14 @@
 export const GLOBAL_CONSTANT = {
     API_METHODS:{
-        GET_ALL_CLIENT: 'GetAllClients',
-        SAVE_CLIENT: 'addclient',
-        UPDATE_CLIENT:'UpdateClient',
-        GET_CLIENT_BY_ID:'GetClientById?clientId=',
-        DELETE_CLEINT:'DeleteClient?clientId=',
-        LOGIN: 'login'
+        GET_ALL_CLIENT: 'GetAllCustomers',
+        SAVE_CLIENT: 'AddCustomer',
+        UPDATE_CLIENT:'UpdateCustomer',
+        GET_CLIENT_BY_ID:'GetCustomerById?id=',
+        DELETE_CLEINT:'DeleteCustomer?id=',
+        LOGIN: 'login',
+        CREATE_WAREHOUS:'AddWarehouse',
+        GET_ALL_WAREHOUSE:'GetAllWarehouses',
+        GET_SINGLE_WAREHOUS:'GetWarehouseById?id='
     },
     LOCAL_LOGIN_KEY:'warehouseUser',
     REG_EX: {

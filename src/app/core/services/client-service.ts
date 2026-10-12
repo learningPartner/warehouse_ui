@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
 import { GLOBAL_CONSTANT } from '../constant/global.contant';
 import { ClientModel } from '../models/classes/client.model';
+import { ApiService } from './api-service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,28 +13,33 @@ import { ClientModel } from '../models/classes/client.model';
 export class ClientService {
 
   api_url: string =  environment.API_URL;
+ 
 
-
-  http = inject(HttpClient)
+  apiService = inject(ApiService);
 
   getAllClients(): Observable<API_Response> {
-    return this.http.get<API_Response>(this.api_url + GLOBAL_CONSTANT.API_METHODS.GET_ALL_CLIENT)
+    return this.apiService.get(this.api_url + GLOBAL_CONSTANT.API_METHODS.GET_ALL_CLIENT)
   }
 
   getClientById(id: number): Observable<API_Response> {
-    return this.http.get<API_Response>(this.api_url + GLOBAL_CONSTANT.API_METHODS.GET_CLIENT_BY_ID + id)
+    return this.apiService.get(this.api_url + GLOBAL_CONSTANT.API_METHODS.GET_CLIENT_BY_ID + id)
   }
+  
 
-  saveClient(obj: ClientModel) :  Observable<API_Response>{
-    return this.http.post<API_Response>(this.api_url + GLOBAL_CONSTANT.API_METHODS.SAVE_CLIENT,obj)
+  // saveClientOld(obj: ClientModel) :  Observable<API_Response>{
+  //   return this.http.post<API_Response>(this.api_url + GLOBAL_CONSTANT.API_METHODS.SAVE_CLIENT,obj)
+  // }
+
+   saveClient(obj: ClientModel) :  Observable<API_Response>{
+    return this.apiService.post<API_Response>(this.api_url + GLOBAL_CONSTANT.API_METHODS.SAVE_CLIENT,obj)
   }
 
   updateClient(obj: ClientModel) :  Observable<API_Response>{
-    return this.http.put<API_Response>(this.api_url + GLOBAL_CONSTANT.API_METHODS.UPDATE_CLIENT,obj)
+    return this.apiService.put<API_Response>(this.api_url + GLOBAL_CONSTANT.API_METHODS.UPDATE_CLIENT,obj)
   }
 
   deleteClient(id: number) :  Observable<API_Response>{
-    return this.http.delete<API_Response>(this.api_url + GLOBAL_CONSTANT.API_METHODS.DELETE_CLEINT + id)
+    return this.apiService.delete<API_Response>(this.api_url + GLOBAL_CONSTANT.API_METHODS.DELETE_CLEINT + id)
   }
 
    

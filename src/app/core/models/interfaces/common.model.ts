@@ -1,7 +1,9 @@
-export interface API_Response {
-    message: string;
-    result: boolean;
-    data: any
+ 
+
+export interface API_Response<T = unknown> {
+  success: boolean;
+  message: string;
+  data: T;
 }
 
 export interface IUser {
