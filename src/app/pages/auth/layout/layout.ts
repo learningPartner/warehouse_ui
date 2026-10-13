@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { IUser } from '../../../core/models/interfaces/common.model';
+import { LoginEmployee } from '../../../core/models/interfaces/common.model';
 import { GLOBAL_CONSTANT } from '../../../core/constant/global.contant';
 
 @Component({
@@ -12,18 +12,19 @@ import { GLOBAL_CONSTANT } from '../../../core/constant/global.contant';
 export class Layout {
 
 
-  loggedUser!:IUser;
+  loggedUser: LoginEmployee | null = null;
   router= inject(Router);
 
   constructor() {
     const localData = localStorage.getItem(GLOBAL_CONSTANT.LOCAL_LOGIN_KEY);
     if(localData != null) {
-      this.loggedUser =  JSON.parse(localData)
+      this.loggedUser = JSON.parse(localData) as LoginEmployee;
     } 
   }
 
   onLogOff() {
     localStorage.removeItem(GLOBAL_CONSTANT.LOCAL_LOGIN_KEY);
+    localStorage.removeItem(GLOBAL_CONSTANT.LOCAL_TOKEN_KEY);
     this.router.navigateByUrl('/login')
   }
 

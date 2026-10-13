@@ -53,10 +53,10 @@
 
     <div class="sidebar-bottom">
       <div class="user-card">
-        <span class="user-avatar" aria-hidden="true">AM</span>
+        <span class="user-avatar" aria-hidden="true">{{ loggedUser?.name?.charAt(0)?.toUpperCase() || '?' }}</span>
         <span class="user-details">
-          <strong>{{loggedUser?.emailId}}</strong>
-          <small>Administrator</small>
+          <strong>{{ loggedUser?.name }}</strong>
+          <small>{{ loggedUser?.userName }} · {{ loggedUser?.role }}</small>
         </span>
         <button class="logout-button" type="button" (click)="onLogOff()" aria-label="Log off">
           <i class="fa fa-sign-out" aria-hidden="true"></i>
@@ -85,7 +85,7 @@
           <i class="fa fa-bell-o" aria-hidden="true"></i>
           <span class="notification-indicator" aria-hidden="true"></span>
         </button>
-        <span class="topbar-user-avatar" aria-hidden="true">AM</span>
+        <span class="topbar-user-avatar" aria-hidden="true">{{ loggedUser?.name?.charAt(0)?.toUpperCase() || '?' }}</span>
       </div>
     </header>
 

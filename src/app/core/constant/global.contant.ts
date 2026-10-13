@@ -14,6 +14,7 @@ export const GLOBAL_CONSTANT = {
         GET_EMPLOYEE_BY_ID:"GetEmployeeById?id="
     },
     LOCAL_LOGIN_KEY:'warehouseUser',
+    LOCAL_TOKEN_KEY:'warehouseToken',
     REG_EX: {
         EMAIL:'',
         AADHAR_CARD:''
