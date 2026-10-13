@@ -34,8 +34,8 @@ export class ClientService {
     return this.apiService.post<API_Response>(this.api_url + GLOBAL_CONSTANT.API_METHODS.SAVE_CLIENT,obj)
   }
 
-  updateClient(obj: ClientModel) :  Observable<API_Response>{
-    return this.apiService.put<API_Response>(this.api_url + GLOBAL_CONSTANT.API_METHODS.UPDATE_CLIENT,obj)
+  updateClient(id:number,obj: ClientModel) :  Observable<API_Response>{
+    return this.apiService.put<API_Response>(this.api_url + GLOBAL_CONSTANT.API_METHODS.UPDATE_CLIENT+'/'+id,obj)
   }
 
   deleteClient(id: number) :  Observable<API_Response>{

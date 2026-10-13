@@ -4,12 +4,12 @@ import { API_Response } from '../../../core/models/interfaces/common.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ClientModel } from '../../../core/models/classes/client.model';
 import { Subscription } from 'rxjs';
-import { DatePipe, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-client-list',
-  imports: [NgClass,DatePipe, RouterLink],
+  imports: [NgClass, RouterLink],
   templateUrl: './client-list.html',
   styleUrl: './client-list.css',
 })

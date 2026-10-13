@@ -12,19 +12,19 @@
         <div class="col-sm-4">
             <div class="form-card warehouse-stat"><span class="form-section-icon"><i class="fa fa-building-o"
                         aria-hidden="true"></i></span>
-                <div><small>Total warehouses</small><strong>3</strong></div>
+                <div><small>Total warehouses</small><strong> {{gridList().length}}</strong></div>
             </div>
         </div>
         <div class="col-sm-4">
             <div class="form-card warehouse-stat"><span class="form-section-icon"><i class="fa fa-arrows-alt"
                         aria-hidden="true"></i></span>
-                <div><small>Total storage area</small><strong>36,500 <span>sq ft</span></strong></div>
+                <div><small>Total storage area</small><strong>{{totlArea}} <span>sq ft</span></strong></div>
             </div>
         </div>
         <div class="col-sm-4">
             <div class="form-card warehouse-stat"><span class="form-section-icon warehouse-accent"><i
                         class="fa fa-snowflake-o" aria-hidden="true"></i></span>
-                <div><small>Cold storage available</small><strong>2 <span>warehouses</span></strong></div>
+                <div><small>Cold storage available</small><strong>{{coldStoargeLength}} <span>warehouses</span></strong></div>
             </div>
         </div>
     </div>
@@ -67,13 +67,10 @@
                             @for (item of gridList(); track $index) {
                             <tr>
                                 <td><strong>{{item.title}}</strong><small>{{item.address1}} </small></td>
-                                <td>{{totalArea}} sq ft</td>
+                                <td>{{item.totalArea}} sq ft</td>
                                 <td><span class="warehouse-badge warehouse-neutral">{{item.isColdStorageAvailable ?
                                         'Cold Storage Available':'No Cold Storage'}}</span></td>
-                                <td>
-
-
-
+                                <td> 
                                     <a (click)="onEdit(item)" aria-label="Edit Greenfield Central"><i
                                             class="fa fa-pencil" aria-hidden="true"></i></a> <a href="#warehouse-delete"
                                         class="warehouse-danger" aria-label="Delete Greenfield Central"><i

@@ -1,7 +1,7 @@
  
 
-export interface API_Response<T = unknown> {
-  success: boolean;
+export interface API_Response<T = any> {
+  result: boolean;
   message: string;
   data: T;
 }

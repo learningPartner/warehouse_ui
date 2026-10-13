@@ -1,1 +1,133 @@
-<p>new-employee works!</p>
+<section class="employee-form-page">
+  <header class="employee-form-heading">
+    <div class="employee-form-eyebrow">
+      <i class="fa fa-id-card-o" aria-hidden="true"></i>
+      TEAM MANAGEMENT
+    </div>
+    <div class="employee-heading-row">
+      <a class="employee-back-link" href="#" aria-label="Back to employees">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+      </a>
+      <div>
+        <h1>Add employee</h1>
+        <p>Create an employee account and assign a warehouse.</p>
+      </div>
+    </div>
+  </header>
+
+  <form class="form-layout">
+    <section class="form-card" aria-labelledby="employee-info-heading">
+      <div class="form-card-heading">
+        <span class="form-section-icon" aria-hidden="true">
+          <i class="fa fa-user-plus"></i>
+        </span>
+        <div>
+          <h2 id="employee-info-heading">Employee information</h2>
+          <p>Enter the employee's details and access information.</p>
+        </div>
+      </div>
+
+      <div class="form-fields">
+        <div class="field-group">
+          <label for="employee-name">Full name <span class="required-mark">*</span></label>
+          <div class="field-control">
+            <i class="fa fa-user-o" aria-hidden="true"></i>
+            <input
+              id="employee-name"
+              name="name"
+              type="text"
+              placeholder="e.g. Alex Morgan"
+              autocomplete="name"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="employee-mobile">Mobile number <span class="required-mark">*</span></label>
+          <div class="field-control">
+            <i class="fa fa-phone" aria-hidden="true"></i>
+            <input
+              id="employee-mobile"
+              name="mobileNo"
+              type="tel"
+              placeholder="e.g. 9900229900"
+              autocomplete="tel"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="employee-username">Email / username <span class="required-mark">*</span></label>
+          <div class="field-control">
+            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+            <input
+              id="employee-username"
+              name="userName"
+              type="email"
+              placeholder="name@company.com"
+              autocomplete="username"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="employee-password">Password <span class="required-mark">*</span></label>
+          <div class="field-control">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+            <input
+              id="employee-password"
+              name="password"
+              type="password"
+              placeholder="Create a password"
+              autocomplete="new-password"
+              required
+            />
+            <button class="employee-password-toggle" type="button" aria-label="Show password">
+              <i class="fa fa-eye" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="employee-warehouse">Assigned warehouse <span class="required-mark">*</span></label>
+          <div class="field-control field-select-control">
+            <i class="fa fa-building-o" aria-hidden="true"></i>
+            <select id="employee-warehouse" name="warehouseAssignedId" required>
+              <option value="" selected disabled>Select a warehouse</option>
+              @for (item of wareHouseList$ | async; track $index) {
+                 <option [value]="item.id">{{item.title}} — {{item.city}}</option>
+              }
+             
+            </select>
+            <i class="fa fa-angle-down select-chevron" aria-hidden="true"></i>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="employee-role">Role <span class="required-mark">*</span></label>
+          <div class="field-control field-select-control">
+            <i class="fa fa-shield" aria-hidden="true"></i>
+            <select id="employee-role" name="role" required>
+              <option value="" selected disabled>Select a role</option>
+              <option value="Admin">Admin</option>
+              <option value="Manager">Manager</option>
+              <option value="Employee">Employee</option>
+            </select>
+            <i class="fa fa-angle-down select-chevron" aria-hidden="true"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="form-actions">
+      <a class="form-button form-button--secondary" href="#">Cancel</a>
+      <button class="form-button form-button--primary" type="button">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Create employee
+      </button>
+    </div>
+  </form>
+</section>

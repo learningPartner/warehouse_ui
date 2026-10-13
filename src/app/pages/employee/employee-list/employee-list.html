@@ -1,1 +1,81 @@
-<p>employee-list works!</p>
+<section class="employees-page">
+    <header class="employees-heading">
+        <div>
+            <div class="employees-eyebrow">
+                <i class="fa fa-id-card-o" aria-hidden="true"></i>
+                TEAM MANAGEMENT
+            </div>
+            <h1>Employees</h1>
+            <p>Manage your warehouse team and assigned locations.</p>
+        </div>
+        <button class="add-employee-button" type="button" routerLink="/admin/employee-form/0">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Add employee
+        </button>
+    </header>
+
+    <div class="employee-toolbar">
+        <label class="employee-search">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <input type="search" placeholder="Search employees..." aria-label="Search employees" />
+        </label>
+        <button class="employee-filter" type="button" >
+            <i class="fa fa-filter" aria-hidden="true"></i>
+            All warehouses
+            <i class="fa fa-angle-down" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <div class="employee-list-heading">
+        <div>
+            <h2>Team directory</h2>
+            <p>Employee contact and warehouse details</p>
+        </div>
+        <span class="employee-count">1 employee</span>
+    </div>
+
+    <div class="employee-grid">
+        @for (item of employeeList$ |async; track $index) {
+        <article class="employee-card">
+            <div class="employee-card-header">
+                <span class="employee-avatar" aria-hidden="true">T</span>
+                <div class="employee-identity">
+                    <h3>{{item.name}}</h3>
+                    <span class="employee-email">
+                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                        {{item.userName}}
+                    </span>
+                </div>
+                <span class="role-badge">{{item.role}}</span>
+            </div>
+
+            <div class="employee-card-details">
+                <div class="employee-detail">
+                    <span class="detail-icon" aria-hidden="true"><i class="fa fa-phone"></i></span>
+                    <span>{{item.mobileNo}}</span>
+                </div>
+                <div class="employee-detail warehouse-detail">
+                    <span class="detail-icon" aria-hidden="true"><i class="fa fa-building-o"></i></span>
+                    <span>
+                        <strong>{{item.warehouseName}}</strong>
+                        <small>{{item.city}}</small>
+                    </span>
+                </div>
+            </div>
+
+            <footer class="employee-card-footer">
+                <span>Employee #2</span>
+                <div class="employee-actions">
+                    <button class="employee-action" type="button" aria-label="View test_employee">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </button>
+                    <button class="employee-action" routerLink="/admin/employee-form/{{item.id}}" type="button" aria-label="Edit test_employee">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </button> 
+                </div>
+            </footer>
+        </article>
+        }
+
+    </div>
+</section>

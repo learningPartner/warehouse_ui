@@ -1,8 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupName, ReactiveFormsModule, Validators } from '@angular/forms';
-import { GLOBAL_CONSTANT } from '../../../core/constant/global.contant';
-import { UserLoginModel } from '../../../core/models/classes/user.model';
-import { API_Response, IUser } from '../../../core/models/interfaces/common.model';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { API_Response } from '../../../core/models/interfaces/common.model';
 import { ClientService } from '../../../core/services/client-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,7 +13,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ClientForm {
 
-  logeedUser!: IUser;
   currentEditId: number = 0;
 
   clientForm!: FormGroup;
@@ -25,14 +22,7 @@ export class ClientForm {
   router= inject(Router);
   activatedRoute = inject(ActivatedRoute);
 
-
-
-
   constructor() {
-    const localUserData =  localStorage.getItem(GLOBAL_CONSTANT.LOCAL_LOGIN_KEY);
-    if(localUserData) {
-      this.logeedUser =  JSON.parse(localUserData) 
-    }
     this.activatedRoute.params.subscribe({
       next:(res:any)=>{
         debugger;
@@ -47,23 +37,19 @@ export class ClientForm {
 
   intializeForm() {
     this.clientForm = this.formBuilder.group({
-      clientId: [0],
-      clientName: ['',Validators.required],
-      phoneNumber: ['',Validators.required],
-      emailAddress: ['',Validators.required],
-      isActive: ['',Validators.required],
-      createdAt: [new Date(),Validators.required],
-      createdBy: [this.logeedUser.userId,Validators.required],
-      updatedAt: [new Date(),Validators.required],
-      updatedBy: [this.logeedUser.userId,Validators.required],
-      clientAddress: ['']
+      customerId: [0],
+      name: ['', Validators.required],
+      address: [''],
+      mobile: ['', Validators.required],
+      email: ['', Validators.required],
+      gstNo: [''],
     })
   }
 
   getClientById() {
     this.clientSrv.getClientById(this.currentEditId).subscribe({
       next:(res:API_Response)=>{
-        this.clientForm.setValue(res.data);
+        this.clientForm.patchValue(res.data);
       }
     })
   }
@@ -71,7 +57,6 @@ export class ClientForm {
   onSaveClient() {
     debugger;
     const  formValue = this.clientForm.value;
-    formValue.isActive =  formValue.isActive == "true" ? true: false; 
     this.clientSrv.saveClient(formValue).subscribe({
       next:(res:API_Response)=>{
         if(res.result) {
@@ -89,10 +74,7 @@ export class ClientForm {
 
   onUpdateClient() {
     const formValue = this.clientForm.value;
-    formValue.updatedBy = this.logeedUser.userId;
-    formValue.updatedAt = new Date();
-    formValue.isActive =  formValue.isActive == "true" ? true: false; 
-    this.clientSrv.updateClient(formValue).subscribe({
+    this.clientSrv.updateClient(this.currentEditId,formValue).subscribe({
       next:(res:API_Response)=>{
         if(res.result) {
           alert("Client Update Success");

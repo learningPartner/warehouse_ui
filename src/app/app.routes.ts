@@ -5,6 +5,8 @@ import { ClientList } from './pages/clients/client-list/client-list';
 import { ClientForm } from './pages/clients/client-form/client-form';
 import { authGuard } from './core/guards/auth-guard';
 import { WarehouseMaster } from './pages/warehouse-master/warehouse-master';
+import { EmployeeList } from './pages/employee/employee-list/employee-list';
+import { NewEmployee } from './pages/employee/new-employee/new-employee';
 
 export const routes: Routes = [
   {
@@ -32,6 +34,14 @@ export const routes: Routes = [
       {
         path: 'warehouse-list',
         component: WarehouseMaster, 
+      },
+      {
+        path: 'employees',
+        component: EmployeeList, 
+      },
+      {
+        path: 'employee-form/:empid',
+        component: NewEmployee, 
       },
     ],
   },

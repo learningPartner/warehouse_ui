@@ -1,13 +1,14 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { WarehouseService } from '../../core/services/warehouse-service';
 import { IWarehouse, IWarehouseList } from '../../core/models/interfaces/warehouse.model';
 import { API_Response } from '../../core/models/interfaces/common.model';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http'; 
+import { CommonImports } from '../../core/constant/common.imports';
 
 @Component({
   selector: 'app-warehouse-master',
-  imports: [ReactiveFormsModule],
+  imports: [CommonImports.FORM_IMPORTS],
   templateUrl: './warehouse-master.html',
   styleUrl: './warehouse-master.css',
 })
@@ -20,6 +21,8 @@ export class WarehouseMaster implements OnInit {
 
   gridList= signal<IWarehouseList[]>([]);
   editId: number | undefined = 0;
+  totlArea: number = 0;
+  coldStoargeLength: number = 0;
 
   constructor() {
     this.initializeForm();
@@ -33,7 +36,17 @@ export class WarehouseMaster implements OnInit {
   getAll() {
     this.warehouseSr.getAllWareHouse().subscribe({
       next:(res:API_Response)=>{
-        this.gridList.set(res.data)
+        this.gridList.set(res.data);  
+
+        // this.gridList().forEach(element => {
+        //     this.totlArea =  this.totlArea + element.totalArea;
+        // });
+        this.coldStoargeLength =  this.gridList().filter(m=>m.isColdStorageAvailable == true).length;
+
+
+        this.totlArea =  this.gridList().reduce((acc, cur)=>{
+          return acc + cur.totalArea
+        },0)
       }
     })
   }

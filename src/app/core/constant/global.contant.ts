@@ -3,12 +3,15 @@ export const GLOBAL_CONSTANT = {
         GET_ALL_CLIENT: 'GetAllCustomers',
         SAVE_CLIENT: 'AddCustomer',
         UPDATE_CLIENT:'UpdateCustomer',
-        GET_CLIENT_BY_ID:'GetCustomerById?id=',
+        GET_CLIENT_BY_ID:'GetCustomerById/',
         DELETE_CLEINT:'DeleteCustomer?id=',
         LOGIN: 'login',
         CREATE_WAREHOUS:'AddWarehouse',
         GET_ALL_WAREHOUSE:'GetAllWarehouses',
-        GET_SINGLE_WAREHOUS:'GetWarehouseById?id='
+        GET_SINGLE_WAREHOUS:'GetWarehouseById?id=',
+        GET_ALL_EMPLOYEE:'GetAllEmployees',
+        SAVE_EMPLOYEE:'AddEmployee',
+        GET_EMPLOYEE_BY_ID:"GetEmployeeById?id="
     },
     LOCAL_LOGIN_KEY:'warehouseUser',
     REG_EX: {
