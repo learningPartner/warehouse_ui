@@ -5,8 +5,14 @@
             <h1 id="warehouse-heading">Warehouses</h1>
             <p class="warehouse-muted mb-0">Manage the spaces your clients call their storage home.</p>
         </div>
-        <a href="#warehouse-create" class="form-button form-button--primary"><i class="fa fa-plus"
-                aria-hidden="true"></i> Add warehouse</a>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="#warehouse-create" class="form-button form-button--secondary"><i class="fa fa-building-o"
+                    aria-hidden="true"></i> Add warehouse</a>
+            <button type="button" class="form-button form-button--primary" data-bs-toggle="modal"
+                data-bs-target="#addWarehouseSpaceModal">
+                <i class="fa fa-plus" aria-hidden="true"></i> Add space
+            </button>
+        </div>
     </header>
     <div class="row g-3 mb-4">
         <div class="col-sm-4">
@@ -71,6 +77,7 @@
                                 <td><span class="warehouse-badge warehouse-neutral">{{item.isColdStorageAvailable ?
                                         'Cold Storage Available':'No Cold Storage'}}</span></td>
                                 <td> 
+                                    <button class=" btn btn-sm btn-success" (click)="openModal(item)">Space</button>
                                     <a (click)="onEdit(item)" aria-label="Edit Greenfield Central"><i
                                             class="fa fa-pencil" aria-hidden="true"></i></a> <a href="#warehouse-delete"
                                         class="warehouse-danger" aria-label="Delete Greenfield Central"><i
@@ -83,7 +90,7 @@
                     </table>
                 </div>
                 <p class="warehouse-muted mt-3 mb-0">Showing 3 of 3 warehouses � Sample records</p>
-            </section>
+            </section> 
         </div>
         <div class="col-xl-4">
             <form id="warehouse-create" [formGroup]="warehousForm" (ngSubmit)="onSave()" class="form-layout"
@@ -163,3 +170,123 @@
         </div>
     </div>
 </section>
+
+<div class="modal" #spaceModal tabindex="-1"
+    aria-labelledby="addWarehouseSpaceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content warehouse-space-modal">
+            <div class="modal-header">
+                <div>
+                    <div class="warehouse-eyebrow mb-2">SPACE MANAGEMENT</div>
+                    <h2 class="modal-title fs-5" id="addWarehouseSpaceModalLabel">Warehouse {{openWareHouseDetail?.title}} - {{openWareHouseDetail?.city}}</h2>
+                    <p class="warehouse-muted mb-0 mt-1">Add a space or review spaces registered in your warehouses.</p>
+                </div>
+                <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-4 align-items-start">
+                    <div class="col-lg-4">
+                        <section class="warehouse-space-form-panel" aria-labelledby="space-form-heading">
+                            <div class="form-card-heading">
+                                <span class="form-section-icon"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                <div>
+                                    <h3 id="space-form-heading">Add a space</h3>
+                                    <p>Enter the new storage space details.</p>
+                                </div>
+                            </div>
+                            <form class="form-layout mt-3" aria-label="Add warehouse space form"> 
+                                <div class="field-group">
+                                    <label for="space-name">Space name <span class="required-mark">*</span></label>
+                                    <div class="field-control">
+                                        <i class="fa fa-tag" aria-hidden="true"></i>
+                                        <input id="space-name" [(ngModel)]="newSpaceObj.name" name="name" type="text" placeholder="e.g. North Wing"
+                                            required />
+                                    </div>
+                                </div>
+                                <div class="field-group">
+                                    <label for="space-area">Area (sq ft) <span class="required-mark">*</span></label>
+                                    <div class="field-control">
+                                        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                        <input id="space-area" [(ngModel)]="newSpaceObj.areaSqft" name="areaSqft" type="number" min="0" step="any"
+                                            placeholder="e.g. 1200" required />
+                                    </div>
+                                </div>
+                                <div class="field-group">
+                                    <label for="space-description">Description</label>
+                                    <div class="field-control field-textarea-control">
+                                        <i class="fa fa-align-left" aria-hidden="true"></i>
+                                        <textarea id="space-description" [(ngModel)]="newSpaceObj.description" name="description" rows="3"
+                                            placeholder="Add details about this space"></textarea>
+                                    </div>
+                                </div>
+                                <div class="warehouse-facility">
+                                    <div class="form-check form-switch warehouse-switch">
+                                        <input id="space-is-active" [(ngModel)]="newSpaceObj.isActive" name="isActive" class="form-check-input" type="checkbox"
+                                            role="switch" checked />
+                                        <label for="space-is-active" class="form-check-label">Space is active</label>
+                                    </div>
+                                    <p class="warehouse-muted mt-1 mb-0">Active spaces are available for use.</p>
+                                </div>
+                            </form>
+                        </section>
+                    </div>
+                    <div class="col-lg-8">
+                        <section class="warehouse-space-list" aria-labelledby="space-list-heading">
+                            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+                                <div>
+                                    <h3 id="space-list-heading" class="warehouse-section-title">Existing spaces</h3>
+                                    <p class="warehouse-muted mb-0">View and manage warehouse storage areas.</p>
+                                </div>
+                                <span class="warehouse-badge">3 spaces</span>
+                            </div>
+                            <div class="field-control warehouse-space-search mb-3">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <input type="search" placeholder="Search spaces..." aria-label="Search spaces (design preview)" />
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table align-middle warehouse-table warehouse-space-table mb-0">
+                                    <caption class="visually-hidden">Sample warehouse spaces and available actions</caption>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">SPACE</th>
+                                            <th scope="col">AREA</th>
+                                            <th scope="col">DESCRIPTION</th>
+                                            <th scope="col">STATUS</th>
+                                            <th scope="col"><span class="visually-hidden">Actions</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (item of spaceList(); track $index) {
+                                             <tr>
+                                            <td><strong>{{item.name}}</strong><small>Warehouse #1</small></td>
+                                            <td>{{item.areaSqft}}</td>
+                                            <td>{{item.description}}</td>
+                                            <td><span class="warehouse-badge">{{item.isActive ? 'Active':'De-Active'}}</span></td>
+                                            <td class="warehouse-space-actions">
+                                                <button type="button" aria-label="Edit North Wing">
+                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                </button>
+                                                <button type="button" class="warehouse-danger" aria-label="Delete North Wing">
+                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        }
+                                       
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="form-button form-button--secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="form-button form-button--primary" (click)="onSaveSpace()">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Save space
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

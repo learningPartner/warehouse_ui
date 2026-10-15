@@ -33,12 +33,11 @@
           <div class="field-control">
             <i class="fa fa-user-o" aria-hidden="true"></i>
             <input
-              id="employee-name"
-              name="name"
+              id="employee-name" 
+              [formField]="employeForm.name"
               type="text"
               placeholder="e.g. Alex Morgan"
-              autocomplete="name"
-              required
+              autocomplete="name" 
             />
           </div>
         </div>
@@ -48,12 +47,11 @@
           <div class="field-control">
             <i class="fa fa-phone" aria-hidden="true"></i>
             <input
-              id="employee-mobile"
-              name="mobileNo"
+              id="employee-mobile" 
+               [formField]="employeForm.mobileNo"
               type="tel"
               placeholder="e.g. 9900229900"
-              autocomplete="tel"
-              required
+              autocomplete="tel" 
             />
           </div>
         </div>
@@ -63,12 +61,11 @@
           <div class="field-control">
             <i class="fa fa-envelope-o" aria-hidden="true"></i>
             <input
-              id="employee-username"
-              name="userName"
+              id="employee-username" 
+              [formField]="employeForm.userName"
               type="email"
               placeholder="name@company.com"
-              autocomplete="username"
-              required
+              autocomplete="username" 
             />
           </div>
         </div>
@@ -78,12 +75,11 @@
           <div class="field-control">
             <i class="fa fa-lock" aria-hidden="true"></i>
             <input
-              id="employee-password"
-              name="password"
+              id="employee-password" 
+              [formField]="employeForm.password"
               type="password"
               placeholder="Create a password"
-              autocomplete="new-password"
-              required
+              autocomplete="new-password" 
             />
             <button class="employee-password-toggle" type="button" aria-label="Show password">
               <i class="fa fa-eye" aria-hidden="true"></i>
@@ -95,7 +91,7 @@
           <label for="employee-warehouse">Assigned warehouse <span class="required-mark">*</span></label>
           <div class="field-control field-select-control">
             <i class="fa fa-building-o" aria-hidden="true"></i>
-            <select id="employee-warehouse" name="warehouseAssignedId" required>
+            <select id="employee-warehouse"   [formField]="employeForm.warehouseAssignedId">
               <option value="" selected disabled>Select a warehouse</option>
               @for (item of wareHouseList$ | async; track $index) {
                  <option [value]="item.id">{{item.title}} — {{item.city}}</option>
@@ -110,11 +106,11 @@
           <label for="employee-role">Role <span class="required-mark">*</span></label>
           <div class="field-control field-select-control">
             <i class="fa fa-shield" aria-hidden="true"></i>
-            <select id="employee-role" name="role" required>
+            <select id="employee-role"   [formField]="employeForm.role">
               <option value="" selected disabled>Select a role</option>
-              <option value="Admin">Admin</option>
-              <option value="Manager">Manager</option>
-              <option value="Employee">Employee</option>
+              @for (item of roleList; track $index) {
+                 <option >{{item}}</option>
+              } 
             </select>
             <i class="fa fa-angle-down select-chevron" aria-hidden="true"></i>
           </div>
@@ -124,10 +120,18 @@
 
     <div class="form-actions">
       <a class="form-button form-button--secondary" href="#">Cancel</a>
-      <button class="form-button form-button--primary" type="button">
+      @if (this.currentEmpId ==0) {
+         <button class="form-button form-button--primary" type="button" (click)="onSaveEmployee()">
         <i class="fa fa-check" aria-hidden="true"></i>
         Create employee
       </button>
+      } @else {
+         <button class="form-button form-button--update" type="button" (click)="onUpdateEmployee()">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Update employee
+      </button>
+      }
+     
     </div>
   </form>
 </section>

@@ -5,6 +5,7 @@ import { API_Response } from '../models/interfaces/common.model';
 import { environment } from '../../../environments/environment.development';
 import { GLOBAL_CONSTANT } from '../constant/global.contant';
 import { IWarehouse } from '../models/interfaces/warehouse.model';
+import { WarehouseSpaceModel } from '../models/classes/warehoouse.model';
 
 @Injectable({
   providedIn: 'root',
@@ -24,5 +25,13 @@ export class WarehouseService {
 
   getWarehouseById(id: number){
     return this.http.get<API_Response>(environment.API_URL + GLOBAL_CONSTANT.API_METHODS.GET_SINGLE_WAREHOUS + id)
+  }
+
+  getSpaceByWarehouseId(id: number){
+    return this.http.get<API_Response>(environment.API_URL + GLOBAL_CONSTANT.API_METHODS.GET_SPACE_BY_WAREHOUSE_ID + id)
+  }
+
+   saveSpace(obj: WarehouseSpaceModel) {
+     return this.http.post<API_Response>(environment.API_URL + GLOBAL_CONSTANT.API_METHODS.ADD_SPACE, obj)
   }
 }

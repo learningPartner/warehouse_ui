@@ -29,5 +29,27 @@ summary:focus-visible, .warehouse-table a:focus-visible { outline: 3px solid var
 .warehouse-delete-panel { padding: 12px; border-radius: 7px; background: #fff5f4; color: #92342c; font-size: 11px; }
 .warehouse-delete-panel h3 { font-size: 13px; font-weight: 700; }
 .warehouse-delete-button { color: #fff; background: #b42318; }
+.warehouse-space-modal { border: 1px solid var(--color-border); border-radius: 12px; box-shadow: 0 18px 50px rgba(20, 41, 31, .18); }
+.warehouse-space-modal .modal-header, .warehouse-space-modal .modal-footer { border-color: var(--color-border); }
+.warehouse-space-modal .modal-title { color: var(--color-text); font-weight: 700; }
+.warehouse-space-modal .modal-body { max-height: calc(100vh - 190px); overflow-y: auto; }
+.warehouse-space-modal .modal-body .form-layout { gap: 14px; }
+.warehouse-space-modal .field-group label, .warehouse-space-modal .form-check-label { font-size: 12px; }
+.warehouse-space-modal .field-control input, .warehouse-space-modal .field-control textarea { font-size: 12px; }
+.warehouse-space-modal .field-control textarea { min-height: 76px; }
+.warehouse-space-form-panel, .warehouse-space-list { padding: 16px; border: 1px solid var(--color-border); border-radius: 10px; background: #fff; }
+.warehouse-space-form-panel .form-card-heading { padding-bottom: 12px; }
+.warehouse-space-form-panel .form-card-heading h3 { margin: 0; color: var(--color-text); font-size: 13px; font-weight: 700; }
+.warehouse-space-form-panel .form-card-heading p { margin: 4px 0 0; color: var(--color-muted); font-size: 10px; }
+.warehouse-space-table { min-width: 620px; }
+.warehouse-space-search { min-height: 35px; }
+.warehouse-space-search input { height: 33px; }
+.warehouse-space-table td { padding-block: 12px; }
+.warehouse-space-table td:nth-child(3) { color: var(--color-muted); }
+.warehouse-space-actions { white-space: nowrap; }
+.warehouse-space-actions button { display: inline-grid; width: 30px; height: 30px; place-items: center; border: 0; border-radius: 5px; color: var(--color-primary); background: transparent; cursor: pointer; }
+.warehouse-space-actions button:hover { background: var(--color-primary-tint); }
+.warehouse-space-actions button:focus-visible { outline: 3px solid var(--color-primary-tint); outline-offset: 2px; }
+.warehouse-space-actions button.warehouse-danger:hover { background: #fff1f0; }
 [id^="warehouse-"] { scroll-margin-top: 90px; }
 @media (max-width: 600px) { .warehouse-page h1 { font-size: 24px; } }

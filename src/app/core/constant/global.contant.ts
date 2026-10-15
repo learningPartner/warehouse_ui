@@ -11,8 +11,12 @@ export const GLOBAL_CONSTANT = {
         GET_SINGLE_WAREHOUS:'GetWarehouseById?id=',
         GET_ALL_EMPLOYEE:'GetAllEmployees',
         SAVE_EMPLOYEE:'AddEmployee',
-        GET_EMPLOYEE_BY_ID:"GetEmployeeById?id="
+        UPDATE_EMPLOYEE:'updateEmployee/',
+        GET_EMPLOYEE_BY_ID:"GetEmployeeById/",
+        GET_SPACE_BY_WAREHOUSE_ID: 'GetAllSpaces?warehouseId=',
+        ADD_SPACE: 'addspace'
     },
+    ROLES: ['Admin','Manager','Employee','SuperAdmin'],
     LOCAL_LOGIN_KEY:'warehouseUser',
     LOCAL_TOKEN_KEY:'warehouseToken',
     REG_EX: {
