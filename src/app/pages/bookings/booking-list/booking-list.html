@@ -1,1 +1,114 @@
-<p>booking-list works!</p>
+<section class="bookings-page">
+  <header class="bookings-heading">
+    <div>
+      <div class="bookings-eyebrow">
+        <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+        SPACE RENTALS
+      </div>
+      <h1>Bookings</h1>
+      <p>View client reservations, warehouse spaces, and booking periods.</p>
+    </div>
+    <a class="form-button form-button--primary" routerLink="/admin/booking-form/0">
+      <i class="fa fa-plus" aria-hidden="true"></i>
+      Add booking
+    </a>
+  </header>
+
+  <section class="booking-list-card" aria-labelledby="booking-directory-heading">
+    <div class="booking-list-toolbar">
+      <div>
+        <h2 id="booking-directory-heading">All bookings</h2>
+        <p>Booking and customer details</p>
+      </div>
+      <span class="booking-count">{{ bookings().length }} bookings</span>
+    </div>
+
+    @if (isLoading()) {
+      <div class="booking-message" role="status">
+        <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+        Loading bookings…
+      </div>
+    } @else if (errorMessage()) {
+      <div class="booking-message booking-error" role="alert">
+        <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+        <span>{{ errorMessage() }}</span>
+        <button class="retry-button" type="button" (click)="loadBookings()">Try again</button>
+      </div>
+    } @else if (bookings().length === 0) {
+      <div class="booking-message">
+        <i class="fa fa-calendar-o" aria-hidden="true"></i>
+        No bookings found.
+      </div>
+    } @else {
+      <div class="booking-table-scroll">
+        <table class="booking-table">
+          <thead>
+            <tr>
+              <th scope="col">CUSTOMER</th>
+              <th scope="col">WAREHOUSE</th>
+              <th scope="col">SPACE</th>
+              <th scope="col">BOOKING PERIOD</th>
+              <th scope="col">AREA</th>
+              <th scope="col">TOTAL</th>
+              <th scope="col">BOOKED ON</th>
+              <th scope="col">BOOKED BY</th>
+              <th scope="col"><span class="visually-hidden">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (booking of bookings(); track booking.id) {
+              <tr>
+                <td>
+                  <div class="booking-customer">
+                    <span class="customer-avatar" aria-hidden="true">
+                      {{ booking.customerName ? booking.customerName.charAt(0).toUpperCase() : '?' }}
+                    </span>
+                    <span class="customer-copy">
+                      <strong>{{ booking.customerName }}</strong>
+                      <a [href]="'tel:' + booking.customerMobile">{{ booking.customerMobile }}</a>
+                      <a [href]="'mailto:' + booking.customerEmail">{{ booking.customerEmail }}</a>
+                    </span>
+                  </div>
+                </td>
+                <td>
+                  <span class="warehouse-name">{{ booking.warehouseName }}</span>
+                  <span class="cell-subtext">{{ booking.warehouseCity }}</span>
+                </td>
+                <td>{{ booking.spaceName }}</td>
+                <td>
+                  <span class="date-range">
+                    {{ booking.bookingFromDate | date: 'dd MMM yyyy' }}
+                    <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                    {{ booking.bookingTillDate | date: 'dd MMM yyyy' }}
+                  </span>
+                </td>
+                <td>{{ booking.sqftAreaNeeded }} sq ft</td>
+                <td class="booking-amount">{{ booking.totalAmount | currency: 'INR' : 'symbol' : '1.0-2' }}</td>
+                <td>{{ booking.bookingDate | date: 'dd MMM yyyy' }}</td>
+                <td>{{ booking.bookingDoneByName }}</td>
+                <td>
+                  <div class="booking-actions">
+                    <button
+                      class="booking-action"
+                      type="button"
+                      [attr.aria-label]="'Edit booking for ' + booking.customerName"
+                    >
+                      <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </button>
+                    <button
+                      class="booking-action delete-action"
+                      type="button"
+                      [attr.aria-label]="'Delete booking for ' + booking.customerName"
+                    >
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+</section>

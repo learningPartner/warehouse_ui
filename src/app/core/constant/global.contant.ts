@@ -14,7 +14,9 @@ export const GLOBAL_CONSTANT = {
         UPDATE_EMPLOYEE:'updateEmployee/',
         GET_EMPLOYEE_BY_ID:"GetEmployeeById/",
         GET_SPACE_BY_WAREHOUSE_ID: 'GetAllSpaces?warehouseId=',
-        ADD_SPACE: 'addspace'
+        ADD_SPACE: 'addspace',
+        ADD_BOOKING:'addBooking',
+        GET_ALL_BOOKINGS:'GetAllBookings'
     },
     ROLES: ['Admin','Manager','Employee','SuperAdmin'],
     LOCAL_LOGIN_KEY:'warehouseUser',

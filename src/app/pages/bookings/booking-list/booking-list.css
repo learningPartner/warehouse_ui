@@ -1,0 +1,283 @@
+.bookings-page {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.bookings-heading,
+.booking-list-toolbar,
+.booking-customer,
+.booking-actions {
+  display: flex;
+  align-items: center;
+}
+
+.bookings-heading,
+.booking-list-toolbar {
+  justify-content: space-between;
+}
+
+.bookings-heading {
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.bookings-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 7px;
+  color: var(--color-primary);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 1.2px;
+}
+
+.bookings-heading h1 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.6px;
+}
+
+.bookings-heading p,
+.booking-list-toolbar p {
+  margin: 4px 0 0;
+  color: var(--color-muted);
+  font-size: 11px;
+}
+
+.booking-list-card {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 3px 10px rgba(20, 41, 31, 0.035);
+}
+
+.booking-list-toolbar {
+  min-height: 67px;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eff2ef;
+}
+
+.booking-list-toolbar h2 {
+  margin: 0;
+  color: #233a2c;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.booking-list-toolbar p {
+  font-size: 10px;
+}
+
+.booking-count {
+  padding: 5px 9px;
+  border-radius: 20px;
+  color: #4d6355;
+  background: #edf2ee;
+  font-size: 9px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.booking-table-scroll {
+  overflow-x: auto;
+}
+
+.booking-table {
+  width: 100%;
+  min-width: 1120px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.booking-table th {
+  height: 38px;
+  padding: 0 12px;
+  border-bottom: 1px solid #e9ede9;
+  color: #77837a;
+  background: #f8faf8;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.65px;
+  white-space: nowrap;
+}
+
+.booking-table td {
+  height: 65px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #eff2ef;
+  color: #536258;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.booking-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.booking-table tbody tr:hover {
+  background: #fbfdfb;
+}
+
+.booking-customer {
+  gap: 8px;
+}
+
+.customer-avatar {
+  display: grid;
+  width: 31px;
+  height: 31px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid #d5efdc;
+  border-radius: 8px;
+  color: var(--color-primary);
+  background: var(--color-primary-tint);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.customer-copy {
+  display: grid;
+  gap: 3px;
+}
+
+.customer-copy strong,
+.warehouse-name {
+  color: var(--color-text);
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.customer-copy a {
+  color: #77837a;
+  font-size: 9px;
+  text-decoration: none;
+}
+
+.customer-copy a:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.warehouse-name,
+.cell-subtext {
+  display: block;
+}
+
+.cell-subtext {
+  margin-top: 3px;
+  color: #89948c;
+  font-size: 9px;
+}
+
+.date-range {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.date-range .fa {
+  color: #87938b;
+  font-size: 9px;
+}
+
+.booking-amount {
+  color: #277243 !important;
+  font-weight: 700;
+}
+
+.booking-actions {
+  gap: 3px;
+}
+
+.booking-action {
+  display: inline-grid;
+  width: 27px;
+  height: 27px;
+  place-items: center;
+  border: 0;
+  border-radius: 6px;
+  color: #78857c;
+  background: transparent;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.booking-action:hover {
+  color: var(--color-primary);
+  background: #eff8f1;
+}
+
+.booking-action.delete-action:hover {
+  color: #b42318;
+  background: #fff1f0;
+}
+
+.booking-message {
+  display: flex;
+  min-height: 110px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 20px;
+  color: #6d7a71;
+  font-size: 11px;
+}
+
+.booking-error {
+  color: #a12a22;
+}
+
+.retry-button {
+  padding: 6px 9px;
+  border: 1px solid #e3b5b1;
+  border-radius: 6px;
+  color: #a12a22;
+  background: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 10px;
+}
+
+.retry-button:hover {
+  background: #fff6f5;
+}
+
+.booking-action:focus-visible,
+.retry-button:focus-visible {
+  outline: 3px solid rgba(21, 128, 61, 0.3);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+@media (max-width: 600px) {
+  .bookings-heading {
+    align-items: flex-start;
+  }
+
+  .bookings-heading h1 {
+    font-size: 21px;
+  }
+
+  .bookings-heading p {
+    max-width: 235px;
+    font-size: 10px;
+  }
+}

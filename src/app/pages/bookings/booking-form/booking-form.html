@@ -32,36 +32,49 @@
           <label for="booking-customer">Client <span class="required-mark">*</span></label>
           <div class="field-control field-select-control">
             <i class="fa fa-user-o" aria-hidden="true"></i>
-            <select id="booking-customer" name="customerId" required>
+            <select id="booking-customer" [(ngModel)]="bookingObj.customerId" name="customerId" required>
               <option value="" selected disabled>Select a client</option>
+              @for (item of customerList$ | async; track $index) {
+                   <option [value]="item.id" >{{item.name}}</option>
+              }
+            </select>
+            <i class="fa fa-angle-down select-chevron" aria-hidden="true"></i>
+          </div>
+        </div>
+        <div class="field-group">
+          <label for="booking-customer">Ware House <span class="required-mark">*</span></label>
+          <div class="field-control field-select-control">
+            <i class="fa fa-user-o" aria-hidden="true"></i>
+            <select id="booking-customer"  [(ngModel)]="bookingObj.warehouseId" name="warehouseId" required (change)="onChangeWarehouse()">
+              <option value="" selected disabled>Select a client</option>
+                @for (item of wareHouseList$ | async; track $index) {
+                   <option [value]="item.id" >{{item.title}} {{item.city}}</option>
+              }
             </select>
             <i class="fa fa-angle-down select-chevron" aria-hidden="true"></i>
           </div>
         </div>
 
-        <div class="field-group">
-          <label for="booking-area">Space required <span class="required-mark">*</span></label>
-          <div class="field-control">
-            <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-            <input
-              id="booking-area"
-              name="sqftAreaNeeded"
-              type="number"
-              min="1"
-              step="1"
-              placeholder="Enter area"
-              required
-            />
-            <span class="input-suffix">sq ft</span>
+         <div class="field-group">
+          <label for="booking-customer">Ware House Space <span class="required-mark">*</span></label>
+          <div class="field-control field-select-control">
+            <i class="fa fa-user-o" aria-hidden="true"></i>
+            <select id="booking-customer" [(ngModel)]="bookingObj.spaceId" name="spaceId" required>
+              <option value="" selected disabled>Select a client</option>
+               @for (item of spaceList(); track $index) {
+                   <option [value]="item.id" >{{item.name}} - {{item.areaSqft}} sqFt</option>
+              }
+            </select>
+            <i class="fa fa-angle-down select-chevron" aria-hidden="true"></i>
           </div>
-        </div>
-
+        </div> 
         <div class="field-group">
           <label for="booking-from">Booking starts <span class="required-mark">*</span></label>
           <div class="field-control">
             <i class="fa fa-calendar-o" aria-hidden="true"></i>
             <input
               id="booking-from"
+               [(ngModel)]="bookingObj.bookingFromDate"
               name="bookingFromDate"
               type="datetime-local"
               required
@@ -75,6 +88,7 @@
             <i class="fa fa-calendar-o" aria-hidden="true"></i>
             <input
               id="booking-till"
+               [(ngModel)]="bookingObj.bookingTillDate"
               name="bookingTillDate"
               type="datetime-local"
               required
@@ -89,6 +103,7 @@
             <input
               id="booking-amount"
               name="totalAmount"
+                [(ngModel)]="bookingObj.totalAmount"
               type="number"
               min="0"
               step="0.01"
@@ -96,24 +111,14 @@
               required
             />
           </div>
-        </div>
-
-        <div class="field-group">
-          <label for="booking-done-by">Booking handled by <span class="required-mark">*</span></label>
-          <div class="field-control field-select-control">
-            <i class="fa fa-id-badge" aria-hidden="true"></i>
-            <select id="booking-done-by" name="bookingDoneBy" required>
-              <option value="" selected disabled>Select an employee</option>
-            </select>
-            <i class="fa fa-angle-down select-chevron" aria-hidden="true"></i>
-          </div>
-        </div>
+        </div> 
+    
       </div>
     </section>
 
     <div class="form-actions">
       <a class="form-button form-button--secondary" href="#">Cancel</a>
-      <button class="form-button form-button--primary" type="button">
+      <button class="form-button form-button--primary" type="button" (click)="onSaveBooking()">
         <i class="fa fa-check" aria-hidden="true"></i>
         Create booking
       </button>
