@@ -20,4 +20,13 @@ export class BookingService {
   getAllBookings(): Observable<API_Response<IBookingListItem[]>> {
     return this.apiSrv.get(environment.API_URL + GLOBAL_CONSTANT.API_METHODS.GET_ALL_BOOKINGS);
   }
+
+  addPayment(obj:any) {
+    return this.apiSrv.post(environment.API_URL + GLOBAL_CONSTANT.API_METHODS.ADD_PAYMENT,obj)
+  }
+
+  getAllPaymentByBookingId(id: number): Observable<API_Response<any[]>> {
+    return this.apiSrv.get(environment.API_URL + GLOBAL_CONSTANT.API_METHODS.GET_PAYMENT_BY_BOOKING +id);
+  }
+
 }

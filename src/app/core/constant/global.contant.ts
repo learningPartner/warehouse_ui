@@ -16,7 +16,9 @@ export const GLOBAL_CONSTANT = {
         GET_SPACE_BY_WAREHOUSE_ID: 'GetAllSpaces?warehouseId=',
         ADD_SPACE: 'addspace',
         ADD_BOOKING:'addBooking',
-        GET_ALL_BOOKINGS:'GetAllBookings'
+        GET_ALL_BOOKINGS:'GetAllBookings',
+        ADD_PAYMENT:'addpayment',
+        GET_PAYMENT_BY_BOOKING:'GetAllPayments?bookingId='
     },
     ROLES: ['Admin','Manager','Employee','SuperAdmin'],
     LOCAL_LOGIN_KEY:'warehouseUser',
