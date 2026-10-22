@@ -4,6 +4,7 @@ import { API_Response } from '../../../core/models/interfaces/common.model';
 import { ClientService } from '../../../core/services/client-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommonService } from '../../../core/services/common-service';
 
 @Component({
   selector: 'app-client-form',
@@ -21,6 +22,9 @@ export class ClientForm {
   clientSrv = inject(ClientService);
   router= inject(Router);
   activatedRoute = inject(ActivatedRoute);
+  commonService =  inject(CommonService);
+
+  isApiCallInProgress: boolean = false;
 
   constructor() {
     this.activatedRoute.params.subscribe({
@@ -56,9 +60,11 @@ export class ClientForm {
 
   onSaveClient() {
     debugger;
+    this.commonService.showLoader$.next(true)
     const  formValue = this.clientForm.value;
     this.clientSrv.saveClient(formValue).subscribe({
       next:(res:API_Response)=>{
+         this.commonService.showLoader$.next(false)
         if(res.result) {
           alert("Client Created Success");
           this.router.navigateByUrl('/admin/clinet-list')
@@ -67,6 +73,7 @@ export class ClientForm {
         }
       },
       error:(err:HttpErrorResponse)=>{
+        this.commonService.showLoader$.next(false)
         alert(err.message)
       }
     })

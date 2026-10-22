@@ -20,10 +20,14 @@ export class Login {
   userService =  inject(User);
   router =  inject(Router);
 
+  isApiCallInProgress: boolean = false;
+
 
   onLogin() {
+    this.isApiCallInProgress = true;
     this.userService.loginUser(this.loginObj).subscribe({
       next:(res: API_Response<LoginResponseData>)=>{
+        this.isApiCallInProgress = false;
         if(res.result) {
           localStorage.setItem(GLOBAL_CONSTANT.LOCAL_LOGIN_KEY, JSON.stringify(res.data.employee));
           localStorage.setItem(GLOBAL_CONSTANT.LOCAL_TOKEN_KEY, res.data.token);
@@ -33,7 +37,8 @@ export class Login {
         }
       },
       error:(err: HttpErrorResponse)=>{
-
+        this.isApiCallInProgress = false;
+        alert(err.error)
       }
     })
   }

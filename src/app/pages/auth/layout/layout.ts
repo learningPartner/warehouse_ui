@@ -1,7 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { LoginEmployee } from '../../../core/models/interfaces/common.model';
 import { GLOBAL_CONSTANT } from '../../../core/constant/global.contant';
+import { BookingForm } from '../../bookings/booking-form/booking-form';
+import { CommonService } from '../../../core/services/common-service';
 
 @Component({
   selector: 'app-layout',
@@ -11,15 +13,20 @@ import { GLOBAL_CONSTANT } from '../../../core/constant/global.contant';
 })
 export class Layout {
 
-
-  loggedUser: LoginEmployee | null = null;
+  isLoading = false;
+  loggedUser: LoginEmployee | undefined = undefined;
   router= inject(Router);
-
+  commonService  =  inject(CommonService);
+  isShowLoader = signal<boolean>(false)
+  
   constructor() {
-    const localData = localStorage.getItem(GLOBAL_CONSTANT.LOCAL_LOGIN_KEY);
-    if(localData != null) {
-      this.loggedUser = JSON.parse(localData) as LoginEmployee;
-    } 
+    this.loggedUser = this.commonService.getLoggedUserData();
+    this.commonService.showLoader$.subscribe({
+      next:(flag: boolean) =>{
+        debugger;
+        this.isShowLoader.set(flag)
+      }
+    })
   }
 
   onLogOff() {

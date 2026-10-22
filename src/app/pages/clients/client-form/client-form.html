@@ -112,8 +112,12 @@
     <div class="form-actions">
       <a class="form-button form-button--secondary" href="#">Cancel</a>
       @if (currentEditId == 0) {
-        <button class="form-button form-button--primary" type="button" (click)="onSaveClient()">
+        <button class="form-button form-button--primary" [disabled]="isApiCallInProgress" type="button" (click)="onSaveClient()">
         <i class="fa fa-check" aria-hidden="true"></i>
+        @if (isApiCallInProgress) {
+          <div class="spinner-border spinner-border-sm"></div>
+        }
+        
         Create client
       </button>
       } @else {

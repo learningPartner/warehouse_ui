@@ -93,4 +93,9 @@
       <router-outlet />
     </main>
   </div>
-</div>
+</div> 
+@if (isShowLoader()) {
+  <div class="loading-overlay" role="status" aria-label="Loading">
+    <img class="loading-indicator" src="/loder.gif" alt="" />
+  </div>
+}

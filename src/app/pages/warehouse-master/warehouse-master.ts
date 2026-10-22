@@ -6,6 +6,7 @@ import { API_Response } from '../../core/models/interfaces/common.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CommonImports } from '../../core/constant/common.imports';
 import { WarehouseSpaceModel } from '../../core/models/classes/warehoouse.model';
+import { CommonService } from '../../core/services/common-service';
 
 @Component({
   selector: 'app-warehouse-master',
@@ -18,6 +19,7 @@ export class WarehouseMaster implements OnInit {
 
   formBuilder = inject(FormBuilder);
   warehouseSr = inject(WarehouseService);
+  commonService =  inject(CommonService);
 
   gridList = signal<IWarehouseList[]>([]);
   editId: number | undefined = 0;
@@ -63,19 +65,27 @@ export class WarehouseMaster implements OnInit {
       address2: [''],
       city: [''],
       totalArea: [''],
-      isColdStorageAvailable: [''],
+      isColdStorageAvailable: [false],
     });
   }
 
   onSave() {
+    this.commonService.showLoader$.next(true)
     const formValue = this.warehousForm.value as IWarehouse;
     this.warehouseSr.createNew(formValue).subscribe({
       next: (res: API_Response) => {
+        this.commonService.showLoader$.next(false)
         if (res.result) {
           alert('WareHouser Created ');
+         // this.getAll();
+          this.gridList.update(oldList =>  [res.data,...oldList,])
+        } else {
+          alert(res.message)
         }
       },
-      error: (err: HttpErrorResponse) => {},
+      error: (err: HttpErrorResponse) => {
+         this.commonService.showLoader$.next(false)
+      },
     });
   }
 

@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { GLOBAL_CONSTANT } from '../../../core/constant/global.contant';
 import { WarehouseSpaceModel } from '../../../core/models/classes/warehoouse.model';
 import { BookingService } from '../../../core/services/booking-service';
+import { CommonService } from '../../../core/services/common-service';
 
 @Component({
   selector: 'app-booking-form',
@@ -20,6 +21,7 @@ import { BookingService } from '../../../core/services/booking-service';
 export class BookingForm {
   wareHosuSrv = inject(WarehouseService);
   customerSrv = inject(ClientService);
+  commonService =  inject(CommonService);
   bookingSrv = inject(BookingService);
 
   customerList$: Observable<ClientModel[]> = new Observable<ClientModel[]>();
@@ -38,10 +40,9 @@ export class BookingForm {
   };
 
   constructor() {
-    const localData = localStorage.getItem(GLOBAL_CONSTANT.LOCAL_LOGIN_KEY);
-    if (localData != null) {
-      const user = JSON.parse(localData) as LoginEmployee;
-      this.bookingObj.bookingDoneBy = user.id;
+    const localData = this.commonService.getLoggedUserData();
+    if (localData != undefined) { 
+      this.bookingObj.bookingDoneBy = localData.id;
     }
 
     this.customerList$ = this.customerSrv
