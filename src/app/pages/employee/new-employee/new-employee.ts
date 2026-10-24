@@ -49,6 +49,7 @@ export class NewEmployee {
 
   onSaveEmployee() {
     const formValue = this.employeForm().value();
+    debugger;
     this.empSr.saveEmp(formValue).subscribe({
       next:(res:API_Response)=>{
         if(res.result){
@@ -56,6 +57,8 @@ export class NewEmployee {
         } else {
           alert(res.message)
         }
+      }, error:()=>{
+        
       }
     })
   }
