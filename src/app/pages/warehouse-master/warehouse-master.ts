@@ -98,7 +98,7 @@ export class WarehouseMaster implements OnInit {
 
   openModal(data: IWarehouseList) {
     if (this.spaceModal != undefined) {
-      this.newSpaceObj.warehouseId = data.id;
+      this.newSpaceObj.id = data.id;
       this.spaceModal.nativeElement.style.display = 'block';
       this.openWareHouseDetail = data;
       if (this.openWareHouseDetail.id != undefined) {

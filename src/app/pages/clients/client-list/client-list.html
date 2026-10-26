@@ -24,23 +24,13 @@
         <i class="fa fa-angle-down filter-chevron" aria-hidden="true"></i>
       </button>
       <div class="view-toggle" role="group" aria-label="Client view">
-        <button
-          class="view-option"
-          (click)="isCardView = true"
-          [ngClass]="isCardView ? 'selected' : ''"
-          type="button"
-          [attr.aria-pressed]="isCardView"
-        >
+        <button class="view-option" (click)="isCardView = true" [ngClass]="isCardView ? 'selected' : ''" type="button"
+          [attr.aria-pressed]="isCardView">
           <i class="fa fa-th-large" aria-hidden="true"></i>
           <span>Cards</span>
         </button>
-        <button
-          class="view-option"
-          (click)="isCardView = false"
-          [ngClass]="!isCardView ? 'selected' : ''"
-          type="button"
-          [attr.aria-pressed]="!isCardView"
-        >
+        <button class="view-option" (click)="isCardView = false" [ngClass]="!isCardView ? 'selected' : ''" type="button"
+          [attr.aria-pressed]="!isCardView">
           <i class="fa fa-list" aria-hidden="true"></i>
           <span>Table</span>
         </button>
@@ -57,74 +47,128 @@
   </div>
 
   @if (isCardView) {
-    <section class="client-cards" aria-label="Clients in card view">
-      @for (item of clientList(); track item.customerId) {
-        <article class="client-card">
-          <div class="client-card-top">
-            <div class="client-identity">
-              <span class="client-avatar" aria-hidden="true">
-                {{ item.name ? item.name.charAt(0).toUpperCase() : '?' }}
-              </span>
-              <div>
-                <h3>{{ item.name }}</h3>
-                <span class="client-id">Customer #{{ item.customerId }}</span>
-              </div>
-            </div>
+  <section class="client-cards" aria-label="Clients in card view">
+    @for (item of clientList(); track item.id) {
+    <article class="client-card">
+      <div class="client-card-top">
+        <div class="client-identity">
+          <span class="client-avatar" aria-hidden="true">
+            {{ item.name ? item.name.charAt(0).toUpperCase() : '?' }}
+          </span>
+          <div>
+            <h3>{{ item.name }}</h3>
+            <span class="client-id">Customer #{{ item.id }}</span>
           </div>
-
-          <div class="client-contact-list">
-            <a class="client-contact" href="tel:{{ item.mobile }}">
-              <span class="contact-icon"><i class="fa fa-phone" aria-hidden="true"></i></span>
-              <span>{{ item.mobile }}</span>
-            </a>
-            <a class="client-contact" href="mailto:{{ item.email }}">
-              <span class="contact-icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
-              <span>{{ item.email }}</span>
-            </a>
-            <div class="client-contact">
-              <span class="contact-icon"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
-              <span>{{ item.address }}</span>
-            </div>
-            <div class="client-contact">
-              <span class="contact-icon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
-              <span>GST: {{ item.gstNo }}</span>
-            </div>
-          </div>
-
-          <div class="client-card-footer">
-            <span>Customer #{{ item.id }}</span>
-            <div class="client-actions">
-              <button
-                class="icon-action"
-                [routerLink]="['/admin/clinet-form/', item.id]"
-                type="button"
-                [attr.aria-label]="'Edit ' + item.name"
-              >
-                <i class="fa fa-pencil" aria-hidden="true"></i>
-              </button>
-              <button
-                class="icon-action more-action"
-                (click)="onDeleteClient(item.id)"
-                type="button"
-                [attr.aria-label]="'Delete ' + item.name"
-              >
-                <i class="fa fa-trash" aria-hidden="true"></i>
-              </button>
-            </div>
-          </div>
-        </article>
-      }
-    </section>
-  } @else {
-    <section class="client-table-section" aria-label="Clients in table view">
-      <div class="table-section-heading">
-        <div>
-          <h2>Table view</h2>
-          <p>The same client details in a compact list.</p>
         </div>
       </div>
-      <div class="table-scroll">
-        <table class="client-table">
+
+      <div class="client-contact-list">
+        <a class="client-contact" href="tel:{{ item.mobile }}">
+          <span class="contact-icon"><i class="fa fa-phone" aria-hidden="true"></i></span>
+          <span>{{ item.mobile }}</span>
+        </a>
+        <a class="client-contact" href="mailto:{{ item.email }}">
+          <span class="contact-icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+          <span>{{ item.email }}</span>
+        </a>
+        <div class="client-contact">
+          <span class="contact-icon"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+          <span>{{ item.address }}</span>
+        </div>
+        <div class="client-contact">
+          <span class="contact-icon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
+          <span>GST: {{ item.gstNo }}</span>
+        </div>
+      </div>
+
+      <div class="client-card-footer">
+        <span>Customer #{{ item.id }}</span>
+        <div class="client-actions">
+          <button class="icon-action" [routerLink]="['/admin/clinet-form/', item.id]" type="button"
+            [attr.aria-label]="'Edit ' + item.name">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </button>
+          <button class="icon-action more-action" (click)="onDeleteClient(item.id)" type="button"
+            [attr.aria-label]="'Delete ' + item.name">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </article>
+    }
+  </section>
+  } @else {
+  <section class="client-table-section" aria-label="Clients in table view">
+    <div class="table-section-heading">
+      <div>
+        <h2>Table view</h2>
+        <p>The same client details in a compact list.</p>
+      </div>
+    </div>
+    <div class="table-scroll">
+      <div class="mb-3 flex justify-end">
+        <p-iconfield iconPosition="left">
+
+          <input pInputText pSize="small" type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+            placeholder="Keyword Search" />
+        </p-iconfield>
+      </div>
+      <p-table #dt [value]="clientList()" [globalFilterFields]="['name', 'mobile', 'email','address']"
+        [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]" removableSort showGridlines [size]="'small'"
+        [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template #header>
+          <tr>
+            <th pSortableColumn="name">
+              <div class="flex items-center gap-2">
+                CLIENT
+                <p-sort-icon field="name" />
+              </div>
+            </th>
+            <th pSortableColumn="mobile">
+              <div class="flex items-center gap-2">
+                MOBILE
+                <p-sort-icon field="name" />
+              </div>
+            </th>
+
+            <th scope="col">EMAIL</th>
+            <th scope="col">ADDRESS</th>
+            <th scope="col">GST NUMBER</th>
+            <th scope="col"><span class="visually-hidden">Actions</span></th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-item>
+          <tr>
+            <td>
+              <div class="table-client">
+                <span class="table-avatar" aria-hidden="true">
+                  {{ item.name ? item.name.charAt(0).toUpperCase() : '?' }}
+                </span>
+                <span>
+                  <strong>{{ item.name }}</strong>
+                  <small>ID #{{ item.id }}</small>
+                </span>
+              </div>
+            </td>
+            <td><a href="tel:{{ item.mobile }}">{{ item.mobile }}</a></td>
+            <td><a href="mailto:{{ item.email }}">{{ item.email }}</a></td>
+            <td>{{ item.address }}</td>
+            <td>{{ item.gstNo }}</td>
+            <td>
+              <button class="icon-action table-more-action" [routerLink]="['/admin/clinet-form', item.id]" type="button"
+                [attr.aria-label]="'Edit ' + item.name">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+              </button>
+              <button class="icon-action table-more-action" (click)="onDeleteClient(item.id)" type="button"
+                [attr.aria-label]="'Delete ' + item.name">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button> -- {{item.id}}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+      <!-- <table class="client-table">
           <thead>
             <tr>
               <th scope="col">CLIENT</th>
@@ -136,7 +180,7 @@
             </tr>
           </thead>
           <tbody>
-            @for (item of clientList(); track item.customerId) {
+            @for (item of clientList(); track item.id) {
               <tr>
                 <td>
                   <div class="table-client">
@@ -145,7 +189,7 @@
                     </span>
                     <span>
                       <strong>{{ item.name }}</strong>
-                      <small>ID #{{ item.customerId }}</small>
+                      <small>ID #{{ item.id }}</small>
                     </span>
                   </div>
                 </td>
@@ -174,8 +218,10 @@
               </tr>
             }
           </tbody>
-        </table>
-      </div>
-    </section>
+        </table> -->
+    </div>
+  </section>
   }
 </section>
+
+<p-confirmdialog />

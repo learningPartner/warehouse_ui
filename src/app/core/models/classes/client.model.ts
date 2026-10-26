@@ -1,5 +1,5 @@
 export class ClientModel {
-  customerId: number;
+  id: number;
   name: string;
   address: string;
   mobile: string;
@@ -7,7 +7,7 @@ export class ClientModel {
   gstNo: string;
 
   constructor() {
-    this.customerId = 0;
+    this.id = 0;
     this.name = '';
     this.address = '';
     this.mobile = '';

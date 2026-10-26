@@ -4,7 +4,7 @@ export const GLOBAL_CONSTANT = {
         SAVE_CLIENT: 'AddCustomer',
         UPDATE_CLIENT:'UpdateCustomer',
         GET_CLIENT_BY_ID:'GetCustomerById/',
-        DELETE_CLEINT:'DeleteCustomer?id=',
+        DELETE_CLEINT:'DeleteCustomer/',
         LOGIN: 'login',
         CREATE_WAREHOUS:'AddWarehouse',
         GET_ALL_WAREHOUSE:'GetAllWarehouses',

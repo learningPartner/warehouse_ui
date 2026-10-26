@@ -11,10 +11,13 @@ import { GLOBAL_CONSTANT } from '../../../core/constant/global.contant';
 import { WarehouseSpaceModel } from '../../../core/models/classes/warehoouse.model';
 import { BookingService } from '../../../core/services/booking-service';
 import { CommonService } from '../../../core/services/common-service';
+import { DatePickerModule } from 'primeng/datepicker';
+import { SelectModule } from 'primeng/select';
+
 
 @Component({
   selector: 'app-booking-form',
-  imports: [AsyncPipe, FormsModule],
+  imports: [AsyncPipe, FormsModule, DatePickerModule, SelectModule],
   templateUrl: './booking-form.html',
   styleUrl: './booking-form.css',
 })
@@ -38,8 +41,11 @@ export class BookingForm {
     totalAmount: 0,
     bookingDoneBy: 0,
   };
+  minDate: Date =  new Date();
 
   constructor() {
+    this.minDate =   new Date();
+   this.minDate.setDate(this.minDate.getDate() - 2); 
     const localData = this.commonService.getLoggedUserData();
     if (localData != undefined) { 
       this.bookingObj.bookingDoneBy = localData.id;

@@ -43,15 +43,17 @@
         </div>
         <div class="field-group">
           <label for="booking-customer">Ware House <span class="required-mark">*</span></label>
-          <div class="field-control field-select-control">
-            <i class="fa fa-user-o" aria-hidden="true"></i>
-            <select id="booking-customer"  [(ngModel)]="bookingObj.warehouseId" name="warehouseId" required (change)="onChangeWarehouse()">
+          <div class="field-control  ">
+            <i class="fa fa-user-o" aria-hidden="true"></i> 
+              <p-select [options]="wareHouseList$ | async" [style]="{'width':'100%'}" name="warehouseId" (onChange)="onChangeWarehouse()" [multiple]="true" [tooltip]="'Select Warehous'"  [(ngModel)]="bookingObj.warehouseId" optionLabel="title" optionValue="id" placeholder="Select a language" />
+       
+            
+            <!-- <select id="booking-customer"  [(ngModel)]="bookingObj.warehouseId" name="warehouseId" required (change)="onChangeWarehouse()">
               <option value="" selected disabled>Select a client</option>
                 @for (item of wareHouseList$ | async; track $index) {
                    <option [value]="item.id" >{{item.title}} {{item.city}}</option>
               }
-            </select>
-            <i class="fa fa-angle-down select-chevron" aria-hidden="true"></i>
+            </select> --> 
           </div>
         </div>
 
@@ -71,14 +73,15 @@
         <div class="field-group">
           <label for="booking-from">Booking starts <span class="required-mark">*</span></label>
           <div class="field-control">
-            <i class="fa fa-calendar-o" aria-hidden="true"></i>
-            <input
+            <i class="fa fa-calendar-o" aria-hidden="true"></i> 
+            <!-- <input
               id="booking-from"
                [(ngModel)]="bookingObj.bookingFromDate"
               name="bookingFromDate"
               type="datetime-local"
               required
-            />
+            /> -->
+            <p-datepicker [(ngModel)]="bookingObj.bookingFromDate" [minDate]="minDate"   name="bookingFromDate" />
           </div>
         </div>
 
