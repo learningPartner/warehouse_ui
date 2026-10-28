@@ -18,7 +18,8 @@ export const GLOBAL_CONSTANT = {
         ADD_BOOKING:'addBooking',
         GET_ALL_BOOKINGS:'GetAllBookings',
         ADD_PAYMENT:'addpayment',
-        GET_PAYMENT_BY_BOOKING:'GetAllPayments?bookingId='
+        GET_PAYMENT_BY_BOOKING:'GetAllPayments?bookingId=',
+        GET_BOOKING_CALANDER: 'GetBookingCalendar/'
     },
     ROLES: ['Admin','Manager','Employee','SuperAdmin'],
     LOCAL_LOGIN_KEY:'warehouseUser',

@@ -30,12 +30,13 @@
         <div class="col-sm-4">
             <div class="form-card warehouse-stat"><span class="form-section-icon warehouse-accent"><i
                         class="fa fa-snowflake-o" aria-hidden="true"></i></span>
-                <div><small>Cold storage available</small><strong>{{coldStoargeLength}} <span>warehouses</span></strong></div>
+                <div><small>Cold storage available</small><strong>{{coldStoargeLength}} <span>warehouses</span></strong>
+                </div>
             </div>
         </div>
     </div>
     <div class="row g-4 align-items-start">
-        <div class="col-xl-8">
+        <div class="col-xl-12">
             <section class="form-card" aria-labelledby="directory-heading">
                 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
                     <div>
@@ -58,8 +59,14 @@
                             </select><i class="fa fa-angle-down select-chevron" aria-hidden="true"></i></div>
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table align-middle warehouse-table mb-0">
+                <div class="table-responsive"> 
+                       <button (click)="onBtnExport()">Download CSV export file</button>
+                    <ag-grid-angular class="warehouse-grid" [defaultColDef]="defaultColDef" [suppressExcelExport]="true"
+ [rowData]="gridList()" (gridReady)="onGridReady($event)" [suppressDragLeaveHidesColumns]="true"
+
+                        [pagination]="true" [rowSelection]="rowSelection" [columnDefs]="colDefs" />
+
+                    <!-- <table class="table align-middle warehouse-table mb-0">
                         <caption class="visually-hidden">Sample warehouse records and actions</caption>
                         <thead>
                             <tr>
@@ -87,10 +94,10 @@
                             }
 
                         </tbody>
-                    </table>
+                    </table> -->
                 </div>
                 <p class="warehouse-muted mt-3 mb-0">Showing 3 of 3 warehouses � Sample records</p>
-            </section> 
+            </section>
         </div>
         <div class="col-xl-4">
             <form id="warehouse-create" [formGroup]="warehousForm" (ngSubmit)="onSave()" class="form-layout"
@@ -151,17 +158,17 @@
                     <div class="form-actions mt-3">
                         <button type="reset" class="form-button form-button--secondary">Clear</button>
                         @if(editId ==0) {
-                             <button type="submit" class="form-button form-button--primary"><i class="fa fa-plus"
+                        <button type="submit" class="form-button form-button--primary"><i class="fa fa-plus"
                                 aria-hidden="true"></i> Save
                             warehouse</button>
                         } @else {
-                             <button type="submit" class="form-button form-button--update"><i class="fa fa-plus"
+                        <button type="submit" class="form-button form-button--update"><i class="fa fa-plus"
                                 aria-hidden="true"></i> Update
                             warehouse</button>
                         }
-                       
 
-                            
+
+
                     </div>
                 </section>
                 <p class="warehouse-muted px-1">Fields marked <span class="required-mark">*</span> are required. Area is
@@ -171,17 +178,18 @@
     </div>
 </section>
 
-<div class="modal" #spaceModal tabindex="-1"
-    aria-labelledby="addWarehouseSpaceModalLabel" aria-hidden="true">
+<div class="modal" #spaceModal tabindex="-1" aria-labelledby="addWarehouseSpaceModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content warehouse-space-modal">
             <div class="modal-header">
                 <div>
                     <div class="warehouse-eyebrow mb-2">SPACE MANAGEMENT</div>
-                    <h2 class="modal-title fs-5" id="addWarehouseSpaceModalLabel">Warehouse {{openWareHouseDetail?.title}} - {{openWareHouseDetail?.city}}</h2>
+                    <h2 class="modal-title fs-5" id="addWarehouseSpaceModalLabel">Warehouse
+                        {{openWareHouseDetail?.title}} - {{openWareHouseDetail?.city}}</h2>
                     <p class="warehouse-muted mb-0 mt-1">Add a space or review spaces registered in your warehouses.</p>
                 </div>
-                <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row g-4 align-items-start">
@@ -194,35 +202,36 @@
                                     <p>Enter the new storage space details.</p>
                                 </div>
                             </div>
-                            <form class="form-layout mt-3" aria-label="Add warehouse space form"> 
+                            <form class="form-layout mt-3" aria-label="Add warehouse space form">
                                 <div class="field-group">
                                     <label for="space-name">Space name <span class="required-mark">*</span></label>
                                     <div class="field-control">
                                         <i class="fa fa-tag" aria-hidden="true"></i>
-                                        <input id="space-name" [(ngModel)]="newSpaceObj.name" name="name" type="text" placeholder="e.g. North Wing"
-                                            required />
+                                        <input id="space-name" [(ngModel)]="newSpaceObj.name" name="name" type="text"
+                                            placeholder="e.g. North Wing" required />
                                     </div>
                                 </div>
                                 <div class="field-group">
                                     <label for="space-area">Area (sq ft) <span class="required-mark">*</span></label>
                                     <div class="field-control">
                                         <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                                        <input id="space-area" [(ngModel)]="newSpaceObj.areaSqft" name="areaSqft" type="number" min="0" step="any"
-                                            placeholder="e.g. 1200" required />
+                                        <input id="space-area" [(ngModel)]="newSpaceObj.areaSqft" name="areaSqft"
+                                            type="number" min="0" step="any" placeholder="e.g. 1200" required />
                                     </div>
                                 </div>
                                 <div class="field-group">
                                     <label for="space-description">Description</label>
                                     <div class="field-control field-textarea-control">
                                         <i class="fa fa-align-left" aria-hidden="true"></i>
-                                        <textarea id="space-description" [(ngModel)]="newSpaceObj.description" name="description" rows="3"
+                                        <textarea id="space-description" [(ngModel)]="newSpaceObj.description"
+                                            name="description" rows="3"
                                             placeholder="Add details about this space"></textarea>
                                     </div>
                                 </div>
                                 <div class="warehouse-facility">
                                     <div class="form-check form-switch warehouse-switch">
-                                        <input id="space-is-active" [(ngModel)]="newSpaceObj.isActive" name="isActive" class="form-check-input" type="checkbox"
-                                            role="switch" checked />
+                                        <input id="space-is-active" [(ngModel)]="newSpaceObj.isActive" name="isActive"
+                                            class="form-check-input" type="checkbox" role="switch" checked />
                                         <label for="space-is-active" class="form-check-label">Space is active</label>
                                     </div>
                                     <p class="warehouse-muted mt-1 mb-0">Active spaces are available for use.</p>
@@ -241,11 +250,14 @@
                             </div>
                             <div class="field-control warehouse-space-search mb-3">
                                 <i class="fa fa-search" aria-hidden="true"></i>
-                                <input type="search" placeholder="Search spaces..." aria-label="Search spaces (design preview)" />
+                                <input type="search" placeholder="Search spaces..."
+                                    aria-label="Search spaces (design preview)" />
                             </div>
                             <div class="table-responsive">
+
                                 <table class="table align-middle warehouse-table warehouse-space-table mb-0">
-                                    <caption class="visually-hidden">Sample warehouse spaces and available actions</caption>
+                                    <caption class="visually-hidden">Sample warehouse spaces and available actions
+                                    </caption>
                                     <thead>
                                         <tr>
                                             <th scope="col">SPACE</th>
@@ -257,23 +269,25 @@
                                     </thead>
                                     <tbody>
                                         @for (item of spaceList(); track $index) {
-                                             <tr>
+                                        <tr>
                                             <td><strong>{{item.name}}</strong><small>Warehouse #1</small></td>
                                             <td>{{item.areaSqft}}</td>
                                             <td>{{item.description}}</td>
-                                            <td><span class="warehouse-badge">{{item.isActive ? 'Active':'De-Active'}}</span></td>
+                                            <td><span class="warehouse-badge">{{item.isActive ?
+                                                    'Active':'De-Active'}}</span></td>
                                             <td class="warehouse-space-actions">
                                                 <button type="button" aria-label="Edit North Wing">
                                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                                 </button>
-                                                <button type="button" class="warehouse-danger" aria-label="Delete North Wing">
+                                                <button type="button" class="warehouse-danger"
+                                                    aria-label="Delete North Wing">
                                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                                                 </button>
                                             </td>
                                         </tr>
                                         }
-                                       
-                                       
+
+
                                     </tbody>
                                 </table>
                             </div>

@@ -7,15 +7,21 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { CommonImports } from '../../core/constant/common.imports';
 import { WarehouseSpaceModel } from '../../core/models/classes/warehoouse.model';
 import { CommonService } from '../../core/services/common-service';
+import { AgGridAngular } from 'ag-grid-angular'; // Angular Data Grid Component
+import { ClientSideRowModelModule, GridApi, GridReadyEvent, PaginationModule, type CellClickedEvent, type ColDef, type RowSelectionOptions } from 'ag-grid-community'; // Column Definition Type Interface
+
+ 
 
 @Component({
   selector: 'app-warehouse-master',
-  imports: [CommonImports.FORM_IMPORTS],
+  imports: [CommonImports.FORM_IMPORTS,AgGridAngular],
   templateUrl: './warehouse-master.html',
   styleUrl: './warehouse-master.css',
 })
 export class WarehouseMaster implements OnInit {
   warehousForm!: FormGroup;
+
+  private gridApi!: GridApi;
 
   formBuilder = inject(FormBuilder);
   warehouseSr = inject(WarehouseService);
@@ -31,8 +37,84 @@ export class WarehouseMaster implements OnInit {
 
   @ViewChild('spaceModal') spaceModal!: ElementRef;
 
+  rowSelection: RowSelectionOptions = {
+    mode: "singleRow",
+    checkboxes: true,
+    enableClickSelection: true,
+  };
+
+   colDefs: ColDef[] = [
+        { field: "title", headerName:"Title", editable: true },
+        { field: "address1" , headerName:"Address" },
+        { field: "address2" , headerName:"Address 2"  },
+        { field: "city" , headerName:"City Name" },
+        { field: "totalArea" , headerName:"Total Area",
+          filter: "agNumberColumnFilter",
+          cellRenderer:(data:any) => `${data.data.totalArea} sqFt` 
+         },
+        { field:'isColdStorageAvailable',
+          headerName:'Cold Storage',
+        //   cellRenderer: (params:any) => {
+        //     debugger;
+        //     // put the value in bold
+        //     return (params.isColdStorageAvailable  == true ? "Yes" : "No")
+        // }
+          cellRenderer: (params:any) => params.data.isColdStorageAvailable  == true ? "Yes" : "No"
+         // cellRenderer:(item: any)=> item.isColdStorageAvailable ? "Yes":"No"  
+        },
+        {
+          headerName:"Actions",
+          cellRenderer: () => '<button class="edit-btn">Edit</button> <button class="delete-btn">Delete</button>',
+           onCellClicked: (event: CellClickedEvent) => {
+        // only react if the button itself was clicked
+        if ((event.event?.target as HTMLElement).closest('.edit-btn')) {
+          this.onEdit(event.data);
+        }
+        if ((event.event?.target as HTMLElement).closest('.delete-btn')) {
+          this.onDeleteWareHouse(event.data);
+        }
+      },
+          
+        }
+    ];
+
+    defaultColDef: ColDef = {
+
+flex: 1,
+
+    minWidth: 150,
+
+    filter: "agTextColumnFilter",
+
+    suppressHeaderMenuButton: true,
+
+    suppressHeaderContextMenu: true,
+
+
+  };
+
+
   constructor() {
     this.initializeForm();
+  }
+
+
+  onGridReady(params: GridReadyEvent) {
+
+    this.gridApi = params.api;
+
+  }
+
+  onBtnExport() {
+
+    this.gridApi.exportDataAsCsv();
+
+  }
+
+
+  onEdit2(data:any) {
+    debugger;
+    alert("sdfsd")
   }
 
   ngOnInit() {
@@ -127,5 +209,9 @@ export class WarehouseMaster implements OnInit {
         }
       }
     })
+  }
+
+  onDeleteWareHouse(data: any) {
+    debugger;
   }
 }

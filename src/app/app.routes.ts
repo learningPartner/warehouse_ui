@@ -9,6 +9,7 @@ import { EmployeeList } from './pages/employee/employee-list/employee-list';
 import { NewEmployee } from './pages/employee/new-employee/new-employee';
 import { BookingForm } from './pages/bookings/booking-form/booking-form';
 import { BookingList } from './pages/bookings/booking-list/booking-list';
+import { Dashboard } from './pages/dashboard/dashboard';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,11 @@ export const routes: Routes = [
    // canActivate: [authGuard],
     children: [
       {
+       path: '',
+       component: Dashboard,
+       pathMatch: 'full',
+     },
+     {
         path: 'clinet-list',
         component: ClientList, 
       },
@@ -53,6 +59,10 @@ export const routes: Routes = [
         path: 'booking-list',
         component: BookingList, 
       },
+      {
+        path: 'dashboard',
+        component: Dashboard, 
+      }
     ],
   },
 ];

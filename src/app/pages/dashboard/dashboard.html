@@ -1,0 +1,272 @@
+<section class="dashboard-page">
+  <header class="dashboard-heading">
+    <div>
+      <div class="dashboard-eyebrow">
+        <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+        SPACE OVERVIEW
+      </div>
+      <h1>Booking calendar</h1>
+      <p>See which warehouse spaces are booked or available at a glance.</p>
+    </div>
+    <button class="dashboard-add-button" type="button">
+      <i class="fa fa-plus" aria-hidden="true"></i>
+      New booking
+    </button>
+  </header>
+
+  <section class="calendar-filters" aria-label="Calendar filters">
+    <label class="calendar-filter warehouse-filter">
+      <span class="filter-label">WAREHOUSE</span>
+      <span class="filter-control">
+        <i class="fa fa-building-o" aria-hidden="true"></i>
+        <select aria-label="Select warehouse" [(ngModel)]="searchObj.wareHouseId">
+            @for (item of wareHoouseList$ | async; track $index) {
+                 <option [value]="item.id">{{item.title}} {{item.city}}</option>
+            } 
+        </select>
+        <i class="fa fa-angle-down filter-chevron" aria-hidden="true"></i>
+      </span>
+    </label>
+
+    <label class="calendar-filter">
+      <span class="filter-label">FROM</span>
+      <span class="filter-control">
+        <i class="fa fa-calendar-o" aria-hidden="true"></i>
+        <input aria-label="From date" type="date"  [(ngModel)]="searchObj.fromDate"/>
+      </span>
+    </label>
+
+    <label class="calendar-filter">
+      <span class="filter-label">TO</span>
+      <span class="filter-control">
+        <i class="fa fa-calendar-o" aria-hidden="true"></i>
+        <input aria-label="To date" type="date"  [(ngModel)]="searchObj.todate" />
+      </span>
+    </label>
+
+    <button class="apply-filter-button" type="button" (click)="loadBookings()">
+      <i class="fa fa-search" aria-hidden="true"></i>
+      Show availability
+    </button>
+  </section>
+
+  <section class="availability-summary" aria-label="Availability summary">
+    <div class="summary-item">
+      <span class="summary-icon spaces-icon"><i class="fa fa-th-large" aria-hidden="true"></i></span>
+      <span><strong>5</strong><small>Total spaces</small></span>
+    </div>
+    <span class="summary-divider" aria-hidden="true"></span>
+    <div class="summary-item">
+      <span class="summary-icon available-icon"><i class="fa fa-check" aria-hidden="true"></i></span>
+      <span><strong>2</strong><small>Available today</small></span>
+    </div>
+    <span class="summary-divider" aria-hidden="true"></span>
+    <div class="summary-item">
+      <span class="summary-icon booked-icon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+      <span><strong>3</strong><small>Booked today</small></span>
+    </div>
+    <span class="summary-date">Monday, 19 October 2026</span>
+  </section>
+
+  <section class="calendar-card" aria-labelledby="availability-heading">
+    <header class="calendar-card-header">
+      <div>
+        <h2 id="availability-heading">Space availability</h2>
+        <p>Viman Nagar WareHouse <span aria-hidden="true">·</span> Pune</p>
+      </div>
+      <div class="calendar-header-actions">
+        <div class="calendar-legend" aria-label="Availability legend">
+          <span><i class="legend-dot free-dot"></i> Available</span>
+          <span><i class="legend-dot booked-dot"></i> Booked</span>
+        </div>
+        <div class="date-navigation" aria-label="Calendar navigation">
+          <button type="button" aria-label="Previous week">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+          </button>
+          <span>19 – 25 Oct 2026</span>
+          <button type="button" aria-label="Next week">
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="calendar-scroll">
+      <table class="availability-grid">
+        <thead>
+          <tr>
+            <th class="space-column-heading" scope="col">WAREHOUSE SPACE</th>
+            @for (item of datesList(); track $index) {
+                 <th class="date-heading" scope="col">{{item}}</th>
+            } 
+          </tr>
+        </thead>
+        <tbody>
+            @for (item of spaceList(); track $index) {
+                 <tr>
+            <th class="space-cell" scope="row"><span class="space-icon"><i class="fa fa-cube" aria-hidden="true"></i></span><span><strong>{{item.name}}</strong><small>{{item.areaSqft}} sq ft</small></span></th>
+            @for (date of datesList(); track $index) {
+                @if(getBookingBySpaceDate(item.spaceId,date); as booking) {
+                     <td class="availability-cell is-booked" [attr.aria-label]="'Booked: ' + booking.customerName"><span>{{booking.customerName}}</span></td>
+                } @else {
+                    @if (item.isActive) {
+                        <td class="availability-cell weekend-cell">
+                        <button
+                          class="available-label"
+                          type="button"
+                          [attr.aria-label]="'Create booking for ' + item.name + ' on ' + date"
+                          (click)="openBookingModal(item.spaceId, date)"
+                        >
+                          <i class="fa fa-plus" aria-hidden="true"></i> Available
+                        </button>
+                      </td>
+                    } @else {
+                        <td class="availability-cell weekend-cell">
+                            <span>De-Active</span>
+                      </td>
+                    }
+                      
+                }
+                  
+            }
+          </tr>
+            }
+         
+          
+        </tbody>
+      </table>
+    </div>
+
+    @if (calendarError()) {
+      <p class="calendar-error" role="alert">{{ calendarError() }}</p>
+    }
+
+    <footer class="calendar-footer">
+      <i class="fa fa-info-circle" aria-hidden="true"></i>
+      Select an available date in a space row to create a booking.
+    </footer>
+  </section>
+</section>
+
+@if (isBookingModalOpen()) {
+  <div class="booking-modal-backdrop" (click)="closeBookingModal()">
+    <section
+      class="booking-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="create-calendar-booking-title"
+      (click)="$event.stopPropagation()"
+    >
+      <header class="booking-modal-header">
+        <div>
+          <div class="dashboard-eyebrow">
+            <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
+            NEW SPACE BOOKING
+          </div>
+          <h2 id="create-calendar-booking-title">Create booking</h2>
+        </div>
+        <button
+          class="booking-modal-close"
+          type="button"
+          aria-label="Close booking dialog"
+          [disabled]="isSavingBooking()"
+          (click)="closeBookingModal()"
+        >
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </button>
+      </header>
+
+      <form #bookingForm="ngForm" (ngSubmit)="onSaveBooking(bookingForm)">
+        <div class="booking-modal-context">
+          <span><small>Space</small><strong>{{ selectedSpace()?.name }}</strong></span>
+          <span><small>Booking starts</small><strong>{{ selectedDate() }}</strong></span>
+          <span><small>Warehouse</small><strong>Selected in filters</strong></span>
+        </div>
+
+        <div class="booking-modal-fields">
+          <label class="booking-modal-field">
+            <span>Customer <b aria-hidden="true">*</b></span>
+            <select
+              name="customerId"
+              [(ngModel)]="bookingDraft.customerId"
+              required
+              [disabled]="!!customerLoadError()"
+            >
+              <option [ngValue]="null" disabled>Select a customer</option>
+              @for (customer of customerList$ | async; track customer.id) {
+                <option [ngValue]="customer.id">{{ customer.name }}</option>
+              }
+            </select>
+          </label>
+
+          <label class="booking-modal-field">
+            <span>Booking ends <b aria-hidden="true">*</b></span>
+            <input
+              type="date"
+              name="bookingTillDate"
+              [(ngModel)]="bookingDraft.bookingTillDate"
+              [min]="selectedDate()"
+              required
+            />
+          </label>
+
+          <label class="booking-modal-field">
+            <span>Area required (sq ft) <b aria-hidden="true">*</b></span>
+            <input
+              type="number"
+              name="sqftAreaNeeded"
+              [(ngModel)]="bookingDraft.sqftAreaNeeded"
+              min="1"
+              [max]="selectedSpace()?.areaSqft ?? null"
+              step="1"
+              required
+            />
+          </label>
+
+          <label class="booking-modal-field">
+            <span>Total amount <b aria-hidden="true">*</b></span>
+            <input
+              type="number"
+              name="totalAmount"
+              [(ngModel)]="bookingDraft.totalAmount"
+              min="0"
+              step="0.01"
+              required
+            />
+          </label>
+        </div>
+
+        @if (customerLoadError()) {
+          <p class="booking-modal-error" role="alert">{{ customerLoadError() }}</p>
+        }
+        @if (bookingError()) {
+          <p class="booking-modal-error" role="alert">{{ bookingError() }}</p>
+        }
+
+        <footer class="booking-modal-actions">
+          <button
+            class="booking-modal-cancel"
+            type="button"
+            [disabled]="isSavingBooking()"
+            (click)="closeBookingModal()"
+          >
+            Cancel
+          </button>
+          <button
+            class="booking-modal-submit"
+            type="submit"
+            [disabled]="bookingForm.invalid || isSavingBooking() || !!customerLoadError()"
+          >
+            @if (isSavingBooking()) {
+              <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+              Saving...
+            } @else {
+              <i class="fa fa-check" aria-hidden="true"></i>
+              Create booking
+            }
+          </button>
+        </footer>
+      </form>
+    </section>
+  </div>
+}

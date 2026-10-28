@@ -9,6 +9,55 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
+import {
+ 
+
+  ColGroupDef,
+
+  DateFilterModule,
+
+  GridApi,
+
+  GridOptions,
+
+  GridReadyEvent,
+
+  IDateFilterParams,
+
+  ModuleRegistry,
+
+  NumberFilterModule,
+
+  RowApiModule,
+
+  TextFilterModule,
+
+  enableDevValidations,
+  RowSelectionModule,
+  ClientSideRowModelModule,
+  PaginationModule,
+  CsvExportModule,
+  TextEditorModule,
+  ColumnApiModule
+
+} from "ag-grid-community";
+
+ModuleRegistry.registerModules([
+
+  ClientSideRowModelModule,
+ 
+  TextFilterModule,
+ColumnApiModule,
+  NumberFilterModule,
+CsvExportModule,
+  DateFilterModule, 
+  RowApiModule,
+  PaginationModule,
+   RowSelectionModule,
+   TextEditorModule
+
+]);
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
