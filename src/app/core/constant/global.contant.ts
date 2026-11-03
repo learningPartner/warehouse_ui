@@ -31,6 +31,7 @@ export const GLOBAL_CONSTANT = {
     VALIDATION_TEXT:{
         REQUIRED: 'This is Mandatory',
         EMAIL:'Provide Proper Email',
-        AADHAR_CARD:'Aadhar Card has to be 12 Digit Numnber only' 
+        AADHAR_CARD:'Aadhar Card has to be 12 Digit Numnber only' ,
+        MOBILE: 'Mobile No has to be 10 Digit'
     }
 }

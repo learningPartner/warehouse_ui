@@ -5,10 +5,12 @@ import { ClientService } from '../../../core/services/client-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from '../../../core/services/common-service';
+import { GLOBAL_CONSTANT } from '../../../core/constant/global.contant';
+import { ConstantPipe } from '../../../shared/pipes/constant-pipe';
 
 @Component({
   selector: 'app-client-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ConstantPipe],
   templateUrl: './client-form.html',
   styleUrl: './client-form.css',
 })
@@ -24,7 +26,7 @@ export class ClientForm {
   activatedRoute = inject(ActivatedRoute);
   commonService =  inject(CommonService);
 
-  isApiCallInProgress: boolean = false;
+  isApiCallInProgress: boolean = false; 
 
   constructor() {
     this.activatedRoute.params.subscribe({

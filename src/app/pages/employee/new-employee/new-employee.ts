@@ -9,10 +9,11 @@ import { form, FormField } from '@angular/forms/signals';
 import { GLOBAL_CONSTANT } from '../../../core/constant/global.contant';
 import { EmployeeService } from '../../../core/services/employee-service';
 import { ActivatedRoute } from '@angular/router';
+import { ConstantPipe } from '../../../shared/pipes/constant-pipe';
 
 @Component({
   selector: 'app-new-employee',
-  imports: [CommonImports.FORM_IMPORTS, FormField],
+  imports: [CommonImports.FORM_IMPORTS, FormField, ConstantPipe],
   templateUrl: './new-employee.html',
   styleUrl: './new-employee.css',
 })
@@ -31,6 +32,8 @@ export class NewEmployee {
   roleList: string[] =  GLOBAL_CONSTANT.ROLES;
   employeForm = form(this.empSignal);
   currentEmpId: number = 0;
+
+  validationMessage: any = GLOBAL_CONSTANT.VALIDATION_TEXT;
 
 
 
